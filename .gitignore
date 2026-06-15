@@ -1,0 +1,20 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# Generated video build outputs.
+video/episode-01/audio/
+video/episode-01/clips/
+video/episode-01/frames/
+video/episode-01/dist/
+video/episode-01/preview/
+video/episode-01/clips.txt
+video/episode-01/storyboard.json
