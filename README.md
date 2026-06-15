@@ -65,6 +65,7 @@ The skill will:
 ## Course Materials
 
 - [Full course draft](course/loopath-course.md)
+- [Long-form first lesson video](media/loopath-episode-01.mp4)
 - [Chinese teaching notes](references/episode-01.zh.md)
 - [English teaching notes](references/episode-01.en.md)
 - [Lab verifier](labs/lab01/verify.py)
@@ -182,6 +183,7 @@ Use $loopath to start the Loopath course.
 ## 课程材料
 
 - [完整课程草稿](course/loopath-course.md)
+- [第一课长视频](media/loopath-episode-01.mp4)
 - [中文教学参考](references/episode-01.zh.md)
 - [英文教学参考](references/episode-01.en.md)
 - [Lab 验收脚本](labs/lab01/verify.py)

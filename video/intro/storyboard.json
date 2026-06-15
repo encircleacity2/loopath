@@ -1,0 +1,359 @@
+{
+  "title": "Loopath Intro",
+  "mode": "pure-broll-product-demo",
+  "channel": "GitHub README / website hero",
+  "aspect_ratio": "16:9",
+  "resolution": "1920x1080",
+  "fps": 60,
+  "style_preset": "openai-clean",
+  "duration_seconds": 50.0,
+  "visual_quality_bar": {
+    "animation_target": "launch-grade product motion with layered micro-interactions",
+    "overflow_policy": "resize and split text before render",
+    "zoom_policy": "target-led camera moves and slow product-state reveals"
+  },
+  "cast": {
+    "protagonist": "Mina, a builder learning how coding agents really work",
+    "supporting": [
+      "Codex",
+      "Claude Code",
+      "Loopath verifier"
+    ]
+  },
+  "canon": [
+    "Loopath GitHub repo",
+    "$loopath course entrypoint",
+    "README.md",
+    "AGENTS.md",
+    "docs/architecture.md",
+    "Lab verification: PASS 15/15"
+  ],
+  "echo": [
+    {
+      "artifact": "$loopath",
+      "frames": [
+        "START",
+        "STEP",
+        "QUIZ"
+      ]
+    }
+  ],
+  "arc_map": {
+    "hook": [
+      "SUMMON"
+    ],
+    "tension": [
+      "CLONE",
+      "START"
+    ],
+    "reveal": [
+      "STEP",
+      "BUILD"
+    ],
+    "magic": [
+      "VERIFY",
+      "QUIZ"
+    ],
+    "promise": [
+      "PROMISE"
+    ]
+  },
+  "segments": [
+    {
+      "id": "01-summon",
+      "frame_name": "SUMMON",
+      "start": 0.0,
+      "end": 5.0,
+      "title": "Learn loop engineering inside your agent.",
+      "visual": "loop",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 0.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 4.6,
+          "scale": 1.035,
+          "target": "loop",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "02-clone",
+      "frame_name": "CLONE",
+      "start": 5.0,
+      "end": 12.0,
+      "title": "Clone the skill into your agent.",
+      "visual": "code",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 5.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 11.6,
+          "scale": 1.035,
+          "target": "code",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "03-start",
+      "frame_name": "START",
+      "start": 12.0,
+      "end": 18.0,
+      "title": "Say: Use $loopath.",
+      "visual": "agent",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 12.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 17.6,
+          "scale": 1.035,
+          "target": "agent",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "04-step",
+      "frame_name": "STEP",
+      "start": 18.0,
+      "end": 25.0,
+      "title": "Each topic is a card, not a wall of text.",
+      "visual": "agent",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 18.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 24.6,
+          "scale": 1.035,
+          "target": "agent",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "05-build",
+      "frame_name": "BUILD",
+      "start": 25.0,
+      "end": 32.0,
+      "title": "The agent creates the project with you.",
+      "visual": "files",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 25.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 31.6,
+          "scale": 1.035,
+          "target": "files",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "06-verify",
+      "frame_name": "VERIFY",
+      "start": 32.0,
+      "end": 38.5,
+      "title": "Run the rubric automatically.",
+      "visual": "verify",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 32.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 38.1,
+          "scale": 1.035,
+          "target": "verify",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "07-quiz",
+      "frame_name": "QUIZ",
+      "start": 38.5,
+      "end": 45.0,
+      "title": "One question at a time.",
+      "visual": "quiz",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 38.5,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 44.6,
+          "scale": 1.035,
+          "target": "quiz",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "08-promise",
+      "frame_name": "PROMISE",
+      "start": 45.0,
+      "end": 50.0,
+      "title": "A tiny path into agent loops.",
+      "visual": "loop",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 45.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 49.6,
+          "scale": 1.035,
+          "target": "loop",
+          "intent": "focus on product action"
+        }
+      ]
+    }
+  ]
+}

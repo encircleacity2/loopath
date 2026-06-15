@@ -1,0 +1,435 @@
+{
+  "title": "Loopath Episode 1",
+  "mode": "pure-broll-product-demo",
+  "channel": "GitHub README / website hero",
+  "aspect_ratio": "16:9",
+  "resolution": "1920x1080",
+  "fps": 60,
+  "style_preset": "openai-clean",
+  "duration_seconds": 71.0,
+  "visual_quality_bar": {
+    "animation_target": "launch-grade product motion with layered micro-interactions",
+    "overflow_policy": "resize and split text before render",
+    "zoom_policy": "target-led camera moves and slow product-state reveals"
+  },
+  "cast": {
+    "protagonist": "Mina, a builder learning how coding agents really work",
+    "supporting": [
+      "Codex",
+      "Claude Code",
+      "Loopath verifier"
+    ]
+  },
+  "canon": [
+    "Loopath GitHub repo",
+    "$loopath course entrypoint",
+    "README.md",
+    "AGENTS.md",
+    "docs/architecture.md",
+    "Lab verification: PASS 15/15"
+  ],
+  "echo": [
+    {
+      "artifact": "$loopath",
+      "frames": [
+        "START",
+        "STEP",
+        "QUIZ"
+      ]
+    }
+  ],
+  "arc_map": {
+    "hook": [
+      "HOOK"
+    ],
+    "tension": [
+      "BOUNDARY",
+      "README"
+    ],
+    "reveal": [
+      "AGENTS",
+      "ARCHITECTURE"
+    ],
+    "magic": [
+      "LOOP",
+      "LAB",
+      "VERIFY",
+      "QUIZ"
+    ],
+    "promise": [
+      "PROMISE"
+    ]
+  },
+  "segments": [
+    {
+      "id": "01-hook",
+      "frame_name": "HOOK",
+      "start": 0.0,
+      "end": 6.0,
+      "title": "Before code, define the harness.",
+      "visual": "loop",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 0.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 5.6,
+          "scale": 1.035,
+          "target": "loop",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "02-boundary",
+      "frame_name": "BOUNDARY",
+      "start": 6.0,
+      "end": 13.0,
+      "title": "Because API calls only move text.",
+      "visual": "loop",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 6.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 12.6,
+          "scale": 1.035,
+          "target": "loop",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "03-readme",
+      "frame_name": "README",
+      "start": 13.0,
+      "end": 20.0,
+      "title": "Write the promise first.",
+      "visual": "code",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 13.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 19.6,
+          "scale": 1.035,
+          "target": "code",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "04-agents",
+      "frame_name": "AGENTS",
+      "start": 20.0,
+      "end": 27.5,
+      "title": "Give future agents durable instructions.",
+      "visual": "code",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 20.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 27.1,
+          "scale": 1.035,
+          "target": "code",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "05-architecture",
+      "frame_name": "ARCHITECTURE",
+      "start": 27.5,
+      "end": 35.5,
+      "title": "The model does not mutate the world.",
+      "visual": "code",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 27.5,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 35.1,
+          "scale": 1.035,
+          "target": "code",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "06-loop",
+      "frame_name": "LOOP",
+      "start": 35.5,
+      "end": 43.0,
+      "title": "Make every step observable.",
+      "visual": "loop",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 35.5,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 42.6,
+          "scale": 1.035,
+          "target": "loop",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "07-lab",
+      "frame_name": "LAB",
+      "start": 43.0,
+      "end": 51.0,
+      "title": "Let the agent create the skeleton.",
+      "visual": "files",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 43.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 50.6,
+          "scale": 1.035,
+          "target": "files",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "08-verify",
+      "frame_name": "VERIFY",
+      "start": 51.0,
+      "end": 58.0,
+      "title": "A lab is not complete until it can be checked.",
+      "visual": "verify",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 51.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 57.6,
+          "scale": 1.035,
+          "target": "verify",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "09-quiz",
+      "frame_name": "QUIZ",
+      "start": 58.0,
+      "end": 65.0,
+      "title": "Understanding needs a second signal.",
+      "visual": "quiz",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 58.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 64.6,
+          "scale": 1.035,
+          "target": "quiz",
+          "intent": "focus on product action"
+        }
+      ]
+    },
+    {
+      "id": "10-promise",
+      "frame_name": "PROMISE",
+      "start": 65.0,
+      "end": 71.0,
+      "title": "The repo has a boundary, a rulebook, a lab, and a verifier.",
+      "visual": "loop",
+      "silent": true,
+      "silent_reason": "pure-broll: on-screen copy carries the narration",
+      "motion": {
+        "quality": "pure-broll product motion",
+        "entrance": "opacity + y + scale, power3-style cubic",
+        "continuous": "liquid lavender background drift and loop rail pulse",
+        "micro_interactions": "terminal typing, file reveal, verification check reveal, quiz scoring",
+        "exit": "scene transition crossfade only"
+      },
+      "layout_guardrails": {
+        "safe_margin_px": 96,
+        "text_fit": "wrapped by visual unit width",
+        "max_text_lines": 4,
+        "overflow_policy": "split lines before render"
+      },
+      "camera_path": [
+        {
+          "at": 65.0,
+          "scale": 1.0,
+          "target": "scene context",
+          "intent": "establish the beat"
+        },
+        {
+          "at": 70.6,
+          "scale": 1.035,
+          "target": "loop",
+          "intent": "focus on product action"
+        }
+      ]
+    }
+  ]
+}
