@@ -18,3 +18,7 @@ video/episode-01/dist/
 video/episode-01/preview/
 video/episode-01/clips.txt
 video/episode-01/storyboard.json
+media/intro/frames/
+media/intro/music_raw.wav
+media/intro/loopath-intro-silent.mp4
+media/episode-01/clips/**/*-frames/

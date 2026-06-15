@@ -1,0 +1,4 @@
+interface:
+  display_name: "Loopath"
+  short_description: "Interactive loop engineering course skill"
+  default_prompt: "Use $loopath to start the interactive loop engineering course."
