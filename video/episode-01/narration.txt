@@ -1,2 +1,0 @@
-No TTS narration in this version. The video is pure B-roll; on-screen copy carries the teaching beats.
-The MP4 keeps the generated music bed as background audio.

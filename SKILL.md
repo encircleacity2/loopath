@@ -24,7 +24,7 @@ Use one small topic at a time:
 
 1. Show the current episode and step.
 2. Explain the background, purpose, and why this step matters.
-3. Link or mention the relevant explainer clip/video.
+3. Link or mention the relevant step clip.
 4. Ask whether the user wants to continue, ask questions, start the lab, verify work, or take the quiz.
 5. Do not dump the whole episode unless the user asks.
 
@@ -96,5 +96,4 @@ Load only when needed:
 
 - `references/episode-01.zh.md` and `references/episode-01.en.md` for full Episode 1 teaching notes.
 - `course/loopath-course.md` for the complete long-form course draft.
-- `media/intro/loopath-intro.mp4` for the README intro video.
-- `media/loopath-episode-01.mp4` for the longer Episode 1 explainer.
+- `media/episode-01/clips/<zh|en>/step-NN.mp4` for the matching step clip.

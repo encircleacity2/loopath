@@ -19,7 +19,6 @@ class Step:
     background: dict[str, str]
     purpose: dict[str, str]
     why: dict[str, str]
-    video: str
 
 
 STEPS: list[Step] = [
@@ -37,7 +36,6 @@ STEPS: list[Step] = [
             "zh": "先定义项目定位，后面的 README、AGENTS.md、architecture、lab 和 verifier 才会服务同一个目标。",
             "en": "A clear frame keeps README, AGENTS.md, architecture, labs, and verification aligned.",
         },
-        "media/intro/loopath-intro.mp4",
     ),
     Step(
         {"zh": "最终会构建什么", "en": "What You Will Build"},
@@ -53,7 +51,6 @@ STEPS: list[Step] = [
             "zh": "先看终局，才能知道第一节课为什么先搭边界，而不是直接写 action parser。",
             "en": "Seeing the end state explains why Episode 1 starts with boundaries instead of an action parser.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "Harness 不是 API Wrapper", "en": "A Harness Is Not an API Wrapper"},
@@ -69,7 +66,6 @@ STEPS: list[Step] = [
             "zh": "这个区别决定后续模块是否需要 policy、trace 和 eval。",
             "en": "This distinction determines why policy, trace, and eval must exist.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "四层边界", "en": "Four Boundaries"},
@@ -85,7 +81,6 @@ STEPS: list[Step] = [
             "zh": "模型不应该直接修改世界，它应该提出结构化 action。",
             "en": "The model should not directly mutate the world; it should propose structured actions.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "Lab 1 目标", "en": "Lab 1 Target"},
@@ -101,7 +96,6 @@ STEPS: list[Step] = [
             "zh": "先有稳定结构，agent 才能在后续对话中安全继续创建文件和修改代码。",
             "en": "A stable structure lets the agent safely continue creating files and code in later steps.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "创建目录结构", "en": "Create the Directory Structure"},
@@ -117,7 +111,6 @@ STEPS: list[Step] = [
             "zh": "目录本身就是 harness 设计的一部分：代码、评测、trace、文档从第一天就分层。",
             "en": "The directory structure is part of the harness design: code, evals, traces, and docs are separated from day one.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "README 是产品承诺", "en": "README as Product Promise"},
@@ -133,7 +126,6 @@ STEPS: list[Step] = [
             "zh": "边界越清楚，后续 agent 越不容易把项目做歪。",
             "en": "Clear boundaries reduce the chance that future agents take the project in the wrong direction.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "Architecture 写核心约束", "en": "Architecture as Core Constraints"},
@@ -149,7 +141,6 @@ STEPS: list[Step] = [
             "zh": "这句话决定后续 action schema、policy、tool、trace、eval 的存在理由。",
             "en": "That sentence explains why action schema, policy, tools, traces, and evals exist.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "画出 Core Loop", "en": "Draw the Core Loop"},
@@ -165,7 +156,6 @@ STEPS: list[Step] = [
             "zh": "图可以让后续每个模块都知道自己处在 loop 的哪个位置。",
             "en": "The diagram tells every later module where it sits in the loop.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "AGENTS.md 是场景工作协议", "en": "AGENTS.md as Scenario Protocol"},
@@ -181,7 +171,6 @@ STEPS: list[Step] = [
             "zh": "没有 AGENTS.md，agent 每次都靠当前 prompt 猜你的偏好和边界。",
             "en": "Without AGENTS.md, the agent has to infer your preferences and boundaries from the current prompt.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "pyproject.toml", "en": "pyproject.toml"},
@@ -197,7 +186,6 @@ STEPS: list[Step] = [
             "zh": "越早建立项目身份，后续越容易安装、测试和验证。",
             "en": "A clear project identity makes later installation, testing, and verification easier.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "Verifier 自动验收", "en": "Automated Verification"},
@@ -213,7 +201,6 @@ STEPS: list[Step] = [
             "zh": "verification 是 loop engineering 的关键：没有自动验收，就无法稳定改进。",
             "en": "Verification is central to loop engineering: without it, improvement cannot be stable.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "Agent Rubric 检查", "en": "Agent Rubric Review"},
@@ -229,7 +216,6 @@ STEPS: list[Step] = [
             "zh": "脚本和 agent 评分结合，可以同时覆盖确定性和开放性学习目标。",
             "en": "Combining scripts and agent grading covers both deterministic and open-ended learning goals.",
         },
-        "media/loopath-episode-01.mp4",
     ),
     Step(
         {"zh": "Quiz 一问一答", "en": "One-question-at-a-time Quiz"},
@@ -245,7 +231,6 @@ STEPS: list[Step] = [
             "zh": "这让 quiz 像 tutor，而不是静态练习册。",
             "en": "This makes quiz feel like tutoring, not a static worksheet.",
         },
-        "media/loopath-episode-01.mp4",
     ),
 ]
 
@@ -350,24 +335,24 @@ def render_step(args: argparse.Namespace) -> int:
     if args.step < 1 or args.step > len(STEPS):
         raise SystemExit(f"Step must be between 1 and {len(STEPS)}.")
     step = STEPS[args.step - 1]
-    clip_path = f"media/episode-01/clips/{lang}/step-{args.step:02d}.mp4"
-    video_path = clip_path if (ROOT / clip_path).exists() else step.video
+    video_path = f"media/episode-01/clips/{lang}/step-{args.step:02d}.mp4"
     next_cmd = (
         f"`python3 scripts/loopath.py step --episode 1 --step {args.step + 1} --lang {lang}`"
         if args.step < len(STEPS)
         else "`python3 scripts/loopath.py quiz --episode 1 --question 1 --lang {}`".format(lang)
     )
     labels = {
-        "zh": ("背景", "目的", "为什么重要", "视频", "下一步", "继续下一小节、提问、开始 lab、跑 verification，或进入 quiz。"),
-        "en": ("Background", "Purpose", "Why it matters", "Video", "Next", "Continue to the next step, ask a question, start the lab, run verification, or take the quiz."),
+        "zh": ("背景", "目的", "为什么重要", "视频片段", "下一步", "继续下一小节、提问、开始 lab、跑 verification，或进入 quiz。"),
+        "en": ("Background", "Purpose", "Why it matters", "Clip", "Next", "Continue to the next step, ask a question, start the lab, run verification, or take the quiz."),
     }[lang]
+    sep = "：" if lang == "zh" else ": "
     print(card(f"Episode 1 / Step {args.step}: {t(step.title, lang)}", [
-        f"**{labels[0]}**：{t(step.background, lang)}",
-        f"**{labels[1]}**：{t(step.purpose, lang)}",
-        f"**{labels[2]}**：{t(step.why, lang)}",
-        f"**{labels[3]}**：`{video_path}`",
+        f"**{labels[0]}**{sep}{t(step.background, lang)}",
+        f"**{labels[1]}**{sep}{t(step.purpose, lang)}",
+        f"**{labels[2]}**{sep}{t(step.why, lang)}",
+        f"**{labels[3]}**{sep}`{video_path}`",
         "",
-        f"**{labels[4]}**：{labels[5]}",
+        f"**{labels[4]}**{sep}{labels[5]}",
         next_cmd,
     ]))
     return 0

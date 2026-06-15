@@ -11,13 +11,5 @@ build/
 *.egg-info/
 
 # Generated video build outputs.
-video/episode-01/audio/
-video/episode-01/clips/
 video/episode-01/frames/
-video/episode-01/dist/
-video/episode-01/preview/
 video/episode-01/clips.txt
-media/intro/frames/
-media/intro/music_raw.wav
-media/intro/loopath-intro-silent.mp4
-media/episode-01/clips/**/*-frames/
