@@ -39,6 +39,22 @@ The course is designed as a practical lab sequence. Each lesson includes:
 - quiz questions at multiple difficulty levels
 - grading rubrics for open-ended answers
 
+## Lab Verifiers
+
+Lab verifiers live in `labs/`.
+
+For example, to verify a student's Lab 1 project:
+
+```bash
+python3 labs/lab01/verify.py --repo /path/to/student/loopath
+```
+
+Or:
+
+```bash
+make verify-lab1 REPO=/path/to/student/loopath
+```
+
 ## Episode 1 Preview
 
 Episode 1 introduces the project boundary and walks through Lab 1.

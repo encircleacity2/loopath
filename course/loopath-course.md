@@ -515,12 +515,26 @@ pythonpath = ["src"]
 
 这一步暂时不安装复杂依赖。第一节课的重点是边界和结构，而不是模型调用。
 
-#### Step 7：自检脚本
+#### Step 7：运行自检脚本
 
-在项目根目录运行：
+课程仓库提供了现成的 Lab 1 verifier，不需要把大段 Python 复制到命令行里。
+
+如果你把课程仓库 clone 到 `~/loopath-course`，你的学生项目在 `~/loopath`，运行：
 
 ```bash
-python - <<'PY'
+python3 ~/loopath-course/labs/lab01/verify.py --repo ~/loopath
+```
+
+如果你在课程仓库根目录，也可以运行：
+
+```bash
+make verify-lab1 REPO=~/loopath
+```
+
+`labs/lab01/verify.py` 的核心逻辑等价于下面这段。课程里展示它，是为了让你知道 verifier 到底在检查什么：
+
+```bash
+python3 - <<'PY'
 from pathlib import Path
 
 required = [
@@ -561,6 +575,8 @@ Lab 1 verification passed
 
 如果报错，不要直接问模型“帮我修好”。先读错误里的缺失路径或缺失文本，再自己定位是哪一步漏了。
 
+正式课程体验里，推荐始终使用仓库里的 verifier 脚本，而不是手敲 inline script。inline script 只用于解释验证逻辑。
+
 ### Lab 1 Done When
 
 学习者完成后应该能回答：
@@ -583,7 +599,7 @@ Agent 验收 prompt：
 You are grading Loopath Lab 1.
 
 Inspect README.md, AGENTS.md, pyproject.toml, docs/architecture.md, and the project directory layout.
-Run the Lab 1 self verification script from the course.
+Run `python3 labs/lab01/verify.py --repo <student_repo>` or the equivalent `make verify-lab1 REPO=<student_repo>` from the course repo.
 
 Grade the submission from 0 to 10.
 Check specifically:
