@@ -493,6 +493,115 @@ This repo teaches how to build a mini coding-agent harness from scratch.
 - 它不是给人看的普通 README，而是 durable instruction。
 - 在课程项目里，AGENTS.md 本身也是 harness 教学的一部分。
 
+更通用地说，AGENTS.md 是一个 agent 的“场景工作协议”。它回答四个问题：
+
+```text
+这个 agent 在什么场景里工作？
+它可以做什么？
+它不应该做什么？
+它做到什么程度才算完成？
+```
+
+所以它不是只服务于代码开发。任何你希望 agent 稳定提升生产力的场景，都需要类似 AGENTS.md 的 durable instruction。
+
+例子 1：会议总结 agent
+
+```md
+# AGENTS.md
+
+## Goal
+Turn meeting transcripts into clear notes, decisions, and action items.
+
+## Can do
+- Summarize discussion by topic.
+- Extract decisions, owners, deadlines, and open questions.
+- Link back to source transcript timestamps when available.
+
+## Must not do
+- Do not invent decisions.
+- Do not assign owners unless the transcript supports it.
+- Do not turn vague ideas into confirmed commitments.
+
+## Done when
+- Summary is under 10 bullets.
+- Action items have owner, task, deadline, and status.
+- Open questions are separated from decisions.
+```
+
+例子 2：研究助理 agent
+
+```md
+# AGENTS.md
+
+## Goal
+Help produce source-backed research briefs.
+
+## Can do
+- Search for primary sources.
+- Compare claims across sources.
+- Separate facts, estimates, and opinions.
+
+## Must not do
+- Do not cite a source you did not read.
+- Do not present old numbers as current.
+- Do not hide uncertainty.
+
+## Done when
+- Every major claim has a source.
+- The brief includes assumptions and confidence level.
+- Contradictory evidence is called out.
+```
+
+例子 3：邮件草稿 agent
+
+```md
+# AGENTS.md
+
+## Goal
+Draft concise, context-aware emails.
+
+## Can do
+- Draft replies using the thread context.
+- Propose subject lines and follow-up asks.
+- Keep the tone direct and respectful.
+
+## Must not do
+- Do not send without explicit confirmation.
+- Do not promise dates, prices, or commitments not in the context.
+- Do not add confidential details unless the user provided them.
+
+## Done when
+- The email has a clear ask.
+- The tone matches the recipient relationship.
+- The user can send it with minimal edits.
+```
+
+例子 4：文档整理 agent
+
+```md
+# AGENTS.md
+
+## Goal
+Turn messy notes into a shareable internal document.
+
+## Can do
+- Reorganize content into sections.
+- Remove duplication.
+- Convert loose notes into tables and action lists.
+
+## Must not do
+- Do not change the meaning of quoted decisions.
+- Do not delete unresolved concerns.
+- Do not over-polish a working note into marketing copy.
+
+## Done when
+- The first section gives the conclusion.
+- The body is scannable.
+- Decisions, risks, and next steps are separated.
+```
+
+从 harness 角度看，AGENTS.md 很重要，是因为它把“人脑里的偏好和边界”写成了 agent 可以读取的规则。没有它，agent 每次都只能靠当前 prompt 猜你的工作方式；有了它，agent loop 的 context、policy、tool use、done criteria 都有了稳定参照。
+
 #### Step 6：写最小 pyproject
 
 `pyproject.toml`：
