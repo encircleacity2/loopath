@@ -77,20 +77,19 @@ git clone --depth 1 https://github.com/encircleacity2/loopath ~/.claude/skills/l
 </details>
 
 <details>
-<summary><b>Maintainer commands & course materials</b></summary>
+<summary><b>How the skill is built & course materials</b></summary>
 
-Deterministic course engine (the skill calls this for you):
+Loopath is a **data-driven** skill — no scripts to run, nothing to execute. The agent *is* the course runtime:
 
-```bash
-python3 scripts/loopath.py start --lang en
-python3 scripts/loopath.py step --episode 1 --step 1 --lang en   # any episode 1-14
-python3 scripts/loopath.py lab-create --repo ./loopath-dev --lang en
-python3 scripts/loopath.py quiz --episode 10 --question 1 --lang en
-python3 scripts/loopath.py grade --episode 10 --question 1 --answer "B" --lang en
-```
+- [`course/episodes.json`](course/episodes.json) — the bilingual source of truth: all 14 episodes' titles, theses, learning objectives, step-by-step teaching beats, lab deliverables/verification, Episode 1's ready-to-write file templates, and a per-episode quiz bank with reference answers.
+- [`SKILL.md`](SKILL.md) — instructions that tell the agent to read that data, teach one step at a time, **build the lab by writing files itself** (via the editor's file tools), grade quizzes against the reference answers + rubric, and resolve videos from `video_sources.json`.
+- [Full course draft](course/loopath-course.md) — the complete long-form course (full code listings + design discussion) the agent pulls from for depth, plus [`references/`](references) for Episode 1.
 
-- [Full course draft](course/loopath-course.md)
-- Bilingual step clips (Episode 1: 14 steps; Episodes 2–14: 5 steps each, `zh`+`en`, narrated) are hosted on GitHub Releases (`clips-v1`) and resolved by the skill via [`video_sources.json`](video_sources.json). To switch to your own CDN (R2/TOS/etc.), just edit that file — `build/upload_clips.py` in the explainer toolkit uploads to any S3-compatible bucket.
+> Earlier versions shelled out to a `scripts/loopath.py` engine. That's gone: executing a freshly-cloned third-party script gets blocked by agent safety classifiers on first install, and everything it did (rendering cards, grading, scaffolding the lab) is something the model does better directly. Content lives in data; the model is the runtime.
+
+Videos stream from external hosting, configured in [`video_sources.json`](video_sources.json):
+
+- Bilingual step clips (Episode 1: 14 steps; Episodes 2–14: 5 steps each, `zh`+`en`, narrated) are hosted on GitHub Releases (`clips-v1`) and resolved via the `clip_url_template`. To switch to your own CDN (R2/TOS/etc.), edit that file.
 - Intro: [English on YouTube](https://youtu.be/VhyROHm6Fkc) · [中文 (release asset)](https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.zh.mp4)
 
 </details>
