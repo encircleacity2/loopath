@@ -57,7 +57,8 @@ media/episode-14/clips/en/step-05.mp4
 - [Full course draft](course/loopath-course.md)
 - [English teaching notes](references/episode-01.en.md)
 - [Chinese teaching notes](references/episode-01.zh.md)
-- Episode clips: `media/episode-01/` through `media/episode-14/`
+- Intro videos: [English](media/intro/loopath-intro.en.mp4) · [Chinese](media/intro/loopath-intro.zh.mp4) — a ~2-minute overview that also shows how to get started.
+- Episode clips: `media/episode-01/` through `media/episode-14/` (bilingual, with narration)
 - Clip coverage: Episode 1 has 14 bilingual steps; Episodes 2-14 have 5 bilingual steps each.
 - [Lab verifier](labs/lab01/verify.py)
 
@@ -167,7 +168,8 @@ media/episode-14/clips/zh/step-05.mp4
 - [完整课程草稿](course/loopath-course.md)
 - [英文教学参考](references/episode-01.en.md)
 - [中文教学参考](references/episode-01.zh.md)
-- Episode clips：`media/episode-01/` 到 `media/episode-14/`
+- 导论视频：[中文](media/intro/loopath-intro.zh.mp4) · [English](media/intro/loopath-intro.en.mp4) —— 约 2 分钟总览，并演示如何快速开始。
+- Episode clips：`media/episode-01/` 到 `media/episode-14/`（双语，带配音）
 - Clip 覆盖：Episode 1 有 14 个双语 steps；Episode 2-14 每集有 5 个双语 steps。
 - [Lab 验收脚本](labs/lab01/verify.py)
 

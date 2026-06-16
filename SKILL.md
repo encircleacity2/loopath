@@ -16,7 +16,7 @@ Infer the default language from the user's current conversation:
 - Mixed -> use the dominant language.
 - If unclear, default to `en` and ask one short question.
 
-Use the selected language for explanations, questions, quiz feedback, and verification cards.
+Use the selected language for explanations, questions, quiz feedback, and verification cards — and serve the matching-language media: the intro video (`media/intro/loopath-intro.<lang>.mp4`) and every step clip (`media/episode-XX/clips/<lang>/step-NN.mp4`).
 
 ## Course Flow
 
@@ -40,8 +40,8 @@ python3 scripts/loopath.py step --episode 14 --step 5 --lang en
 When the user says "start", "continue", "开启 episode", "学习 Loopath", or similar:
 
 1. Detect language from the user message.
-2. Run `scripts/loopath.py start --lang <zh|en>`.
-3. Present the returned Markdown card.
+2. Run `scripts/loopath.py start --lang <zh|en> --text "<recent user message>"`.
+3. Present the returned Markdown card. It links the language-matched 90-second intro video at `media/intro/loopath-intro.<zh|en>.mp4` — surface it so the learner can watch the overview first.
 4. Wait for the user's choice.
 
 If the user asks for a specific episode or step, run:
