@@ -81,7 +81,8 @@ git clone --depth 1 https://github.com/encircleacity2/loopath ~/.claude/skills/l
 
 Loopath is a **data-driven** skill — no scripts to run, nothing to execute. The agent *is* the course runtime:
 
-- [`course/episodes.json`](course/episodes.json) — the bilingual source of truth: all 14 episodes' titles, theses, learning objectives, step-by-step teaching beats, lab deliverables/verification, Episode 1's ready-to-write file templates, and a per-episode quiz bank with reference answers.
+- [`course/episodes.json`](course/episodes.json) — the bilingual source of truth: all 14 episodes' titles, theses, learning objectives, step-by-step teaching beats, lab deliverables/verification, and a per-episode quiz bank with reference answers. Each episode's `lab` points at its on-disk templates.
+- [`course/labs/episode-NN/`](course/labs) — ready-to-write, English lab templates for **every** episode (modules, tests, demo repos, prompts, docs), laid out exactly as they belong in the student's project. Integration edits to earlier files ship as `*.snippet.md`. Every `.py` template is `py_compile`-clean and the core suite passes (`pytest`).
 - [`SKILL.md`](SKILL.md) — instructions that tell the agent to read that data, teach one step at a time, **build the lab by writing files itself** (via the editor's file tools), grade quizzes against the reference answers + rubric, and resolve videos from `video_sources.json`.
 - [Full course draft](course/loopath-course.md) — the complete long-form course (full code listings + design discussion) the agent pulls from for depth, plus [`references/`](references) for Episode 1.
 

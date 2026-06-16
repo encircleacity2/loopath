@@ -16,7 +16,7 @@ The single source of truth is **`course/episodes.json`**. Read it once at the st
 - `course` — `name`, bilingual `tagline`, the `loop` string, `episode_count`, and `open_ended_rubric` (use this rubric verbatim when grading short-answer questions).
 - `episodes[]` — 14 entries. Each has: `n`, `week`, `title{zh,en}`, `thesis{zh,en}`, `objectives{zh,en}`, `steps[]`, `lab`, and `quiz[]`.
   - `steps[]` — Episode 1 has 14 steps; Episodes 2–14 have 5. Each step has `title`, `background`, `purpose`, `why`, all `{zh,en}`.
-  - `lab` — `deliverables{zh,en}`, `verify{zh,en}`. Episode 1 additionally has `dirs[]` and `files{path: content}` (ready-to-write templates).
+  - `lab` — `deliverables{zh,en}`, `verify{zh,en}`, `dir` (path to this episode's on-disk lab templates), `files[]` (workspace-relative paths to write), optional `dirs[]` (workspace dirs to create), and optional `integrations[]` (`*.snippet.md` files describing edits to *earlier* files).
   - `quiz[]` — each is `multiple_choice` (with `choices{zh,en}` and `answer`) or `short_answer` (with `keywords[]`); both carry `reference{zh,en}`.
 
 For deeper teaching beyond the step beats, read the long-form source:
@@ -54,13 +54,21 @@ At the very start (user says "start", "continue", "开始 / 学习 Loopath", or 
 
 ## Lab
 
-The lab happens **inside the conversation**. Build it for the user with the **Write tool** — do not tell them to type shell commands or run a generator, unless they explicitly want to practice the shell themselves.
+The lab happens **inside the conversation**. Build it for the user with the **Write tool** — don't tell them to type shell commands or run a generator, unless they explicitly want to practice the shell.
 
-For **Episode 1**: ask for a workspace path (propose `./loopath-dev` if none given). Create the `lab.dirs` and write each file in `lab.files` to that workspace using the Write tool. Then walk the user through each file in chat — what it is, why it exists, the design tradeoffs — rather than running a separate disk verifier.
+Every episode ships **ready-to-write, English lab templates on disk** under `lab.dir` (e.g. `course/labs/episode-03/`). The files there are laid out exactly as they belong in the student's project (`src/loopath/tools.py`, `tests/test_tools.py`, …). Don't hand-translate code from the course doc — copy these templates.
 
-For **Episodes 2–14**: lab file templates aren't pre-baked in the JSON. Use `lab.deliverables` for the target, and pull the concrete code from the matching section of `course/loopath-course.md`. Write the files with the Write tool and explain each as you go.
+To run a lab:
 
-After building, run the lab's `verify` conversationally: check that the deliverables exist and meet the `verify` criteria (e.g. required files present, key sentences in docs, or run `pytest` if the user has a working environment). Report what passed and what's missing — don't just claim success.
+1. Ask for a workspace path the first time (propose `./loopath-dev` if none given); reuse it for later episodes so the project accumulates.
+2. Ensure any `lab.dirs` exist in the workspace.
+3. For each path in `lab.files`: read `<skill_root>/<lab.dir>/<path>` and write it to `<workspace>/<path>` with the Write tool. (The same workspace-relative path applies on both sides.)
+4. For each entry in `lab.integrations` (e.g. `loop_policy.snippet.md`): read that file from `lab.dir` — it describes a small **edit to an earlier file** (like wiring policy into `loop.py`). Apply the edit with the Edit tool and explain it; do **not** copy a snippet file into the workspace verbatim.
+5. Walk the user through each file in chat — what it is, why it exists, the design tradeoffs. Pull deeper narration from the matching section of `course/loopath-course.md` when they want it.
+
+Note: some files legitimately evolve across episodes — e.g. Episode 9's `src/loopath/tracing.py` supersedes Episode 4's. Writing the newer template over the older file is expected.
+
+After building, run the lab's `verify` conversationally: check the deliverables exist and meet the `verify` criteria (required files present, key sentences in docs, or run `pytest` if the user has a working ≥3.11 environment). Report what passed and what's missing — don't just claim success.
 
 ## Quiz
 
@@ -77,5 +85,5 @@ Run quizzes **one question at a time**, reading from the episode's `quiz[]`:
 
 - Start / welcome → read `episodes.json`, detect language, offer intro from `video_sources.json`.
 - "Episode N step M" → `episodes[N-1].steps[M-1]`.
-- "Start the lab" → `episodes[N-1].lab` (+ course md for episodes 2–14), write files with the Write tool.
+- "Start the lab" → `episodes[N-1].lab`: copy each `files[]` template from `lab.dir` into the workspace, then apply any `integrations[]` snippets.
 - "Quiz me" → iterate `episodes[N-1].quiz`, grade against `reference` + rubric.
