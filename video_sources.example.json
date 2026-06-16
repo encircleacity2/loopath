@@ -1,0 +1,8 @@
+{
+  "_comment": "Copy to video_sources.json to serve videos from external hosting. If absent, the skill falls back to local media/ paths.",
+  "clip_base_url": "https://YOUR-CDN-OR-BUCKET/loopath",
+  "intro": {
+    "en": "https://youtu.be/YOUR_EN_VIDEO_ID",
+    "zh": "https://youtu.be/YOUR_ZH_VIDEO_ID"
+  }
+}
