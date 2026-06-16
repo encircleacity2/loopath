@@ -674,6 +674,7 @@ def start(args: argparse.Namespace) -> int:
         print(card("Loopath 互动课程", [
             "默认语言：中文",
             f"课程范围：{episode_count} 个 episodes。每个 episode 都有对应 step clips。",
+            "先看 90 秒导论视频：`media/intro/loopath-intro.zh.mp4`",
             "学习方式：每次一个小课题。你可以随时提问、继续下一节、开始 lab、跑 verification 或进入 quiz。",
             "",
             "建议从 Episode 1 / Step 1 开始：",
@@ -683,6 +684,7 @@ def start(args: argparse.Namespace) -> int:
         print(card("Loopath Interactive Course", [
             "Default language: English",
             f"Course scope: {episode_count} episodes. Every episode has matching step clips.",
+            "Watch the 90-second intro first: `media/intro/loopath-intro.en.mp4`",
             "Learning mode: one small topic at a time. You can ask questions, continue, start the lab, run verification, or take the quiz.",
             "",
             "Recommended start: Episode 1 / Step 1:",
