@@ -1,0 +1,7 @@
+{
+  "clip_url_template": "https://github.com/encircleacity2/loopath/releases/download/clips-v1/ep{ep:02d}-{lang}-step{step:02d}.mp4",
+  "intro": {
+    "en": "https://youtu.be/VhyROHm6Fkc",
+    "zh": "https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.zh.mp4"
+  }
+}

@@ -687,6 +687,10 @@ VIDEO_SOURCES = _load_video_sources()
 
 
 def clip_ref(episode: int, step: int, lang: str) -> str:
+    # 1) explicit template (e.g. flat release-asset names); 2) base_url + path layout; 3) local.
+    template = VIDEO_SOURCES.get("clip_url_template")
+    if template:
+        return template.format(ep=episode, step=step, lang=lang)
     rel = f"episode-{episode:02d}/clips/{lang}/step-{step:02d}.mp4"
     base = VIDEO_SOURCES.get("clip_base_url")
     return f"{base.rstrip('/')}/{rel}" if base else f"media/{rel}"
