@@ -667,6 +667,35 @@ def card(title: str, body: list[str]) -> str:
     return "\n".join(lines)
 
 
+def _load_video_sources() -> dict:
+    """Optional external video hosting. If video_sources.json exists at repo root,
+    clips and intros resolve to hosted URLs; otherwise they fall back to local
+    media/ paths. Shape:
+      {"clip_base_url": "https://cdn.example.com/loopath",
+       "intro": {"en": "https://youtu.be/...", "zh": "https://youtu.be/..."}}
+    """
+    path = ROOT / "video_sources.json"
+    if path.exists():
+        try:
+            return json.loads(path.read_text())
+        except (json.JSONDecodeError, OSError):
+            return {}
+    return {}
+
+
+VIDEO_SOURCES = _load_video_sources()
+
+
+def clip_ref(episode: int, step: int, lang: str) -> str:
+    rel = f"episode-{episode:02d}/clips/{lang}/step-{step:02d}.mp4"
+    base = VIDEO_SOURCES.get("clip_base_url")
+    return f"{base.rstrip('/')}/{rel}" if base else f"media/{rel}"
+
+
+def intro_ref(lang: str) -> str:
+    return (VIDEO_SOURCES.get("intro", {}) or {}).get(lang) or f"media/intro/loopath-intro.{lang}.mp4"
+
+
 def start(args: argparse.Namespace) -> int:
     lang = normalize_lang(args.lang, args.text or "")
     episode_count = len(EPISODES)
@@ -674,7 +703,7 @@ def start(args: argparse.Namespace) -> int:
         print(card("Loopath 互动课程", [
             "默认语言：中文",
             f"课程范围：{episode_count} 个 episodes。每个 episode 都有对应 step clips。",
-            "先看 90 秒导论视频：`media/intro/loopath-intro.zh.mp4`",
+            f"先看 90 秒导论视频：{intro_ref('zh')}",
             "学习方式：每次一个小课题。你可以随时提问、继续下一节、开始 lab、跑 verification 或进入 quiz。",
             "",
             "建议从 Episode 1 / Step 1 开始：",
@@ -684,7 +713,7 @@ def start(args: argparse.Namespace) -> int:
         print(card("Loopath Interactive Course", [
             "Default language: English",
             f"Course scope: {episode_count} episodes. Every episode has matching step clips.",
-            "Watch the 90-second intro first: `media/intro/loopath-intro.en.mp4`",
+            f"Watch the 90-second intro first: {intro_ref('en')}",
             "Learning mode: one small topic at a time. You can ask questions, continue, start the lab, run verification, or take the quiz.",
             "",
             "Recommended start: Episode 1 / Step 1:",
@@ -701,7 +730,7 @@ def render_step(args: argparse.Namespace) -> int:
     if args.step < 1 or args.step > len(episode.steps):
         raise SystemExit(f"Step must be between 1 and {len(episode.steps)} for Episode {args.episode}.")
     step = episode.steps[args.step - 1]
-    video_path = f"media/episode-{args.episode:02d}/clips/{lang}/step-{args.step:02d}.mp4"
+    video_path = clip_ref(args.episode, args.step, lang)
     if args.step < len(episode.steps):
         next_cmd = f"`python3 scripts/loopath.py step --episode {args.episode} --step {args.step + 1} --lang {lang}`"
         next_text = "继续下一小节、提问、开始 lab、跑 verification，或进入 quiz。" if lang == "zh" else "Continue to the next step, ask a question, start the lab, run verification, or take the quiz."
