@@ -25,7 +25,7 @@ Use one small topic at a time:
 1. Show the current episode and step.
 2. Explain the background, purpose, and why this step matters.
 3. Link or mention the relevant step clip.
-4. Ask whether the user wants to continue, ask questions, start the lab, verify work, or take the quiz.
+4. Ask whether the user wants to continue, ask questions, start the lab, or take the quiz.
 5. Do not dump the whole episode unless the user asks.
 
 For deterministic course output, run:
@@ -62,17 +62,7 @@ Create the lab project:
 python3 scripts/loopath.py lab-create --episode 1 --repo <student_repo> --lang <zh|en>
 ```
 
-Then summarize what files were created and ask the user to inspect or continue.
-
-## Verification
-
-After the user finishes or asks "check", "verify", "验收", "检查", run:
-
-```bash
-python3 scripts/loopath.py verify --episode 1 --repo <student_repo> --lang <zh|en>
-```
-
-Return the rendered verification card verbatim. If it fails, explain only the top missing items and offer to help fix them.
+Then walk the user through each created file in the conversation — what it is, why it exists, and the design tradeoffs — instead of running a separate disk verifier. The lab is interactive: review and reasoning happen in the chat.
 
 ## Quiz
 

@@ -1,215 +1,100 @@
+<div align="center">
+
 # Loopath
 
-**A bilingual interactive skill for learning loop engineering inside an agent.**
+### Learn how coding agents *actually* work — by building the loop yourself, inside your agent.
 
-Loopath is a small reference course for understanding the harness around coding agents: context building, structured actions, policy-gated tools, observations, traces, verification, and evals.
+[![Watch the intro](media/intro/loopath-hero.gif)](https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.en.mp4)
 
-It is meant to be installed as an agent skill. After installation, the agent guides you one step at a time. Each step includes a short text card and a matching clip under `media/episode-XX/clips/`.
+<sub>▶︎ **[Watch the full 2-min intro — English](https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.en.mp4) · [中文](https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.zh.mp4)**</sub>
 
-## Getting Started
+![MIT License](https://img.shields.io/badge/license-MIT-7763D9) ![Bilingual](https://img.shields.io/badge/中文%20%2F%20English-bilingual-7763D9) ![Runs in](https://img.shields.io/badge/runs%20in-Codex%20%2F%20Claude%20Code-0B0B10)
 
-Install the skill:
+</div>
+
+---
+
+Most agent tutorials stop at `prompt → model → answer`. That's not the harness.
+
+**Loopath** is an interactive course that lives *inside* Codex or Claude Code and teaches **loop engineering** — the runtime system around a coding agent — by having you build a tiny, complete one from scratch. It's nanoGPT, but for the agent loop.
+
+It teaches one small step at a time, in your language, with a short narrated clip for every step. Not a doc you read — a course your agent runs.
+
+## Install
 
 ```bash
-git clone https://github.com/encircleacity2/loopath ~/.codex/skills/loopath
+# Claude Code
+git clone https://github.com/encircleacity2/loopath ~/.claude/skills/loopath
+# Codex — same repo, swap the path:  ~/.codex/skills/loopath
 ```
 
-For Claude Code:
+Restart your agent, then say:
+
+> **Use $loopath to start the course.**
+
+The skill auto-detects whether you're writing in **中文 or English** and teaches in that language — matching video *and* content.
+
+## The loop you'll build
+
+```
+context → action → policy → tool → observation → trace → eval → ↺
+```
+
+- Why a harness is a **runtime system**, not an API wrapper
+- Structured **action schemas**, **tool registries**, and **policy gates**
+- **Traces**, **evals**, **loop engineering**, and **self-repair**
+- **14 episodes** → one small, runnable, inspectable agent harness you can explain in an interview
+
+## How it works
+
+- 🎬 **One step at a time** — each with a short narrated clip (中文 / English)
+- 🌐 **Fully bilingual** — auto-routes language for video and explanations
+- 🧪 **Hands-on lab** built conversationally inside your agent — no setup busywork
+- ❓ **Quiz with grading** to check you actually understood it
+
+## Getting started in 20 seconds
+
+1. `git clone … ~/.claude/skills/loopath` (above)
+2. Restart your agent
+3. Say *"Use $loopath to start the course"*
+4. Watch the intro, then learn the loop one step at a time
+
+> Built with [Git LFS](https://git-lfs.com) for the video assets — `git lfs install` once if you don't have it, so the clips download on clone.
+
+<details>
+<summary><b>中文快速开始</b></summary>
+
+**Loopath** 是一个在 Codex / Claude Code 里运行的中英双语互动课程，带你从零搭一个最小但完整的 coding-agent harness，真正理解 agent 背后的 **loop engineering**。
+
+安装（Claude Code，Codex 把路径换成 `~/.codex/skills/loopath`）：
 
 ```bash
 git clone https://github.com/encircleacity2/loopath ~/.claude/skills/loopath
 ```
 
-Restart your agent session, then say:
+重启 agent，然后说：**`用 $loopath 开始 Loopath 课程`**。skill 会根据你的语言自动选择中文或英文，视频和讲解都跟着切换。一次一个小课题，每个 step 配有旁白短视频，最后用 quiz 检验理解。导论视频：[中文](https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.zh.mp4) · [English](https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.en.mp4)。
 
-```text
-Use $loopath to start the Loopath course.
-```
-
-The skill will detect your conversation language, show one small topic at a time, and include the matching step clip path:
-
-```text
-media/episode-01/clips/en/step-01.mp4
-media/episode-01/clips/zh/step-01.mp4
-media/episode-14/clips/en/step-05.mp4
-```
-
-## What You Should See
-
-![Loopath start in agent](media/screenshots/agent-start-en.png)
-
-![Loopath step in agent](media/screenshots/agent-step-en.png)
-
-![Loopath verification in agent](media/screenshots/agent-verify-en.png)
-
-## Learning Flow
-
-1. Start with `$loopath`.
-2. Read the current step card.
-3. Watch the matching clip.
-4. Ask questions or continue to the next step.
-5. Let the agent create the lab files.
-6. Run verification and inspect the result card.
-7. Answer quiz questions one at a time.
-
-## Course Materials
-
-- [Full course draft](course/loopath-course.md)
-- [English teaching notes](references/episode-01.en.md)
-- [Chinese teaching notes](references/episode-01.zh.md)
-- Intro videos: [English](media/intro/loopath-intro.en.mp4) · [Chinese](media/intro/loopath-intro.zh.mp4) — a ~2-minute overview that also shows how to get started.
-- Episode clips: `media/episode-01/` through `media/episode-14/` (bilingual, with narration)
-- Clip coverage: Episode 1 has 14 bilingual steps; Episodes 2-14 have 5 bilingual steps each.
-- [Lab verifier](labs/lab01/verify.py)
+</details>
 
 <details>
-<summary>Optional local commands for maintainers</summary>
+<summary><b>Maintainer commands & course materials</b></summary>
 
-Start the course:
+Deterministic course engine (the skill calls this for you):
 
 ```bash
 python3 scripts/loopath.py start --lang en
-```
-
-Show a step:
-
-```bash
-python3 scripts/loopath.py step --episode 1 --step 1 --lang en
-python3 scripts/loopath.py step --episode 14 --step 5 --lang en
-```
-
-Create the lab:
-
-```bash
-python3 scripts/loopath.py lab-create --episode 1 --repo ./loopath-dev --lang en
-```
-
-Run verification:
-
-```bash
-python3 scripts/loopath.py verify --episode 1 --repo ./loopath-dev --lang en
-```
-
-Ask and grade a quiz question:
-
-```bash
+python3 scripts/loopath.py step --episode 1 --step 1 --lang en   # any episode 1-14
+python3 scripts/loopath.py lab-create --repo ./loopath-dev --lang en
 python3 scripts/loopath.py quiz --episode 10 --question 1 --lang en
 python3 scripts/loopath.py grade --episode 10 --question 1 --answer "B" --lang en
 ```
 
+- [Full course draft](course/loopath-course.md)
+- Bilingual step clips: `media/episode-01/` … `media/episode-14/` (Episode 1: 14 steps; Episodes 2–14: 5 steps each), both `zh` and `en`, narrated.
+- Intro videos: `media/intro/loopath-intro.{en,zh}.mp4`
+
 </details>
-
-## Current Scope
-
-The interactive skill currently includes step cards, bilingual clips, and quiz grading for Episodes 1-14. Lab creation and automated verification are implemented for Lab 1.
 
 ## License
 
-MIT.
-
----
-
-# Loopath 中文说明
-
-**一个在 agent 里学习 loop engineering 的中英双语互动 skill。**
-
-Loopath 是一套小型参考课程，用来理解 coding agent 背后的 harness：context 构建、结构化 action、policy-gated tools、observation、trace、verification 和 eval。
-
-它的定位是可安装到 agent 里的学习 skill。安装后，agent 会一次带你学习一个小课题。每个 step 都有文字卡片，也有对应的短 clip，路径在 `media/episode-XX/clips/`。
-
-## Getting Started / 快速开始
-
-安装到 Codex：
-
-```bash
-git clone https://github.com/encircleacity2/loopath ~/.codex/skills/loopath
-```
-
-安装到 Claude Code：
-
-```bash
-git clone https://github.com/encircleacity2/loopath ~/.claude/skills/loopath
-```
-
-重启 agent session，然后输入：
-
-```text
-Use $loopath to start the Loopath course.
-```
-
-skill 会根据你的对话语言选择中文或英文，每次展示一个小课题，并返回对应 step clip：
-
-```text
-media/episode-01/clips/zh/step-01.mp4
-media/episode-01/clips/en/step-01.mp4
-media/episode-14/clips/zh/step-05.mp4
-```
-
-## Agent 中的参考截图
-
-![Loopath 中文启动截图](media/screenshots/agent-start-zh.png)
-
-![Loopath 中文 step 截图](media/screenshots/agent-step-zh.png)
-
-![Loopath 中文验收截图](media/screenshots/agent-verify-zh.png)
-
-## 学习流程
-
-1. 用 `$loopath` 启动课程。
-2. 阅读当前 step 卡片。
-3. 观看对应 clip。
-4. 提问，或者继续下一步。
-5. 让 agent 创建 lab 文件。
-6. 运行 verification，查看检测结果卡片。
-7. 一问一答完成 quiz。
-
-## 课程材料
-
-- [完整课程草稿](course/loopath-course.md)
-- [英文教学参考](references/episode-01.en.md)
-- [中文教学参考](references/episode-01.zh.md)
-- 导论视频：[中文](media/intro/loopath-intro.zh.mp4) · [English](media/intro/loopath-intro.en.mp4) —— 约 2 分钟总览，并演示如何快速开始。
-- Episode clips：`media/episode-01/` 到 `media/episode-14/`（双语，带配音）
-- Clip 覆盖：Episode 1 有 14 个双语 steps；Episode 2-14 每集有 5 个双语 steps。
-- [Lab 验收脚本](labs/lab01/verify.py)
-
-<details>
-<summary>维护者可选本地命令</summary>
-
-启动课程：
-
-```bash
-python3 scripts/loopath.py start --lang zh
-```
-
-展示一个 step：
-
-```bash
-python3 scripts/loopath.py step --episode 1 --step 1 --lang zh
-python3 scripts/loopath.py step --episode 14 --step 5 --lang zh
-```
-
-创建 lab：
-
-```bash
-python3 scripts/loopath.py lab-create --episode 1 --repo ./loopath-dev --lang zh
-```
-
-运行验收：
-
-```bash
-python3 scripts/loopath.py verify --episode 1 --repo ./loopath-dev --lang zh
-```
-
-提问并评分：
-
-```bash
-python3 scripts/loopath.py quiz --episode 10 --question 1 --lang zh
-python3 scripts/loopath.py grade --episode 10 --question 1 --answer "B" --lang zh
-```
-
-</details>
-
-## 当前范围
-
-互动 skill 目前覆盖 Episode 1-14 的 step 卡片、双语 clips 和 quiz 评分。Lab 创建与自动 verification 目前实现到 Lab 1。
+MIT — share it, remix it, teach with it.

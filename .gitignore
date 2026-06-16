@@ -10,6 +10,3 @@ dist/
 build/
 *.egg-info/
 
-# Generated video build outputs.
-video/episode-01/frames/
-video/episode-01/clips.txt
