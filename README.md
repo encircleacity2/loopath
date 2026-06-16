@@ -4,7 +4,7 @@
 
 Loopath is a small reference course for understanding the harness around coding agents: context building, structured actions, policy-gated tools, observations, traces, verification, and evals.
 
-It is meant to be installed as an agent skill. After installation, the agent guides you one step at a time. Each step includes a short text card and a matching clip under `media/episode-01/clips/`.
+It is meant to be installed as an agent skill. After installation, the agent guides you one step at a time. Each step includes a short text card and a matching clip under `media/episode-XX/clips/`.
 
 ## Getting Started
 
@@ -31,6 +31,7 @@ The skill will detect your conversation language, show one small topic at a time
 ```text
 media/episode-01/clips/en/step-01.mp4
 media/episode-01/clips/zh/step-01.mp4
+media/episode-14/clips/en/step-05.mp4
 ```
 
 ## What You Should See
@@ -56,8 +57,8 @@ media/episode-01/clips/zh/step-01.mp4
 - [Full course draft](course/loopath-course.md)
 - [English teaching notes](references/episode-01.en.md)
 - [Chinese teaching notes](references/episode-01.zh.md)
-- [Episode 1 English clips](media/episode-01/clips/en/)
-- [Episode 1 Chinese clips](media/episode-01/clips/zh/)
+- Episode clips: `media/episode-01/` through `media/episode-14/`
+- Clip coverage: Episode 1 has 14 bilingual steps; Episodes 2-14 have 5 bilingual steps each.
 - [Lab verifier](labs/lab01/verify.py)
 
 <details>
@@ -73,6 +74,7 @@ Show a step:
 
 ```bash
 python3 scripts/loopath.py step --episode 1 --step 1 --lang en
+python3 scripts/loopath.py step --episode 14 --step 5 --lang en
 ```
 
 Create the lab:
@@ -90,15 +92,15 @@ python3 scripts/loopath.py verify --episode 1 --repo ./loopath-dev --lang en
 Ask and grade a quiz question:
 
 ```bash
-python3 scripts/loopath.py quiz --episode 1 --question 1 --lang en
-python3 scripts/loopath.py grade --episode 1 --question 1 --answer "B" --lang en
+python3 scripts/loopath.py quiz --episode 10 --question 1 --lang en
+python3 scripts/loopath.py grade --episode 10 --question 1 --answer "B" --lang en
 ```
 
 </details>
 
 ## Current Scope
 
-The interactive skill currently implements Episode 1 end to end: step cards, bilingual clips, lab creation, verification, and quiz grading.
+The interactive skill currently includes step cards, bilingual clips, and quiz grading for Episodes 1-14. Lab creation and automated verification are implemented for Lab 1.
 
 ## License
 
@@ -112,7 +114,7 @@ MIT.
 
 Loopath 是一套小型参考课程，用来理解 coding agent 背后的 harness：context 构建、结构化 action、policy-gated tools、observation、trace、verification 和 eval。
 
-它的定位是可安装到 agent 里的学习 skill。安装后，agent 会一次带你学习一个小课题。每个 step 都有文字卡片，也有对应的短 clip，路径在 `media/episode-01/clips/`。
+它的定位是可安装到 agent 里的学习 skill。安装后，agent 会一次带你学习一个小课题。每个 step 都有文字卡片，也有对应的短 clip，路径在 `media/episode-XX/clips/`。
 
 ## Getting Started / 快速开始
 
@@ -139,6 +141,7 @@ skill 会根据你的对话语言选择中文或英文，每次展示一个小�
 ```text
 media/episode-01/clips/zh/step-01.mp4
 media/episode-01/clips/en/step-01.mp4
+media/episode-14/clips/zh/step-05.mp4
 ```
 
 ## Agent 中的参考截图
@@ -164,8 +167,8 @@ media/episode-01/clips/en/step-01.mp4
 - [完整课程草稿](course/loopath-course.md)
 - [英文教学参考](references/episode-01.en.md)
 - [中文教学参考](references/episode-01.zh.md)
-- [Episode 1 英文 clips](media/episode-01/clips/en/)
-- [Episode 1 中文 clips](media/episode-01/clips/zh/)
+- Episode clips：`media/episode-01/` 到 `media/episode-14/`
+- Clip 覆盖：Episode 1 有 14 个双语 steps；Episode 2-14 每集有 5 个双语 steps。
 - [Lab 验收脚本](labs/lab01/verify.py)
 
 <details>
@@ -181,6 +184,7 @@ python3 scripts/loopath.py start --lang zh
 
 ```bash
 python3 scripts/loopath.py step --episode 1 --step 1 --lang zh
+python3 scripts/loopath.py step --episode 14 --step 5 --lang zh
 ```
 
 创建 lab：
@@ -198,12 +202,12 @@ python3 scripts/loopath.py verify --episode 1 --repo ./loopath-dev --lang zh
 提问并评分：
 
 ```bash
-python3 scripts/loopath.py quiz --episode 1 --question 1 --lang zh
-python3 scripts/loopath.py grade --episode 1 --question 1 --answer "B" --lang zh
+python3 scripts/loopath.py quiz --episode 10 --question 1 --lang zh
+python3 scripts/loopath.py grade --episode 10 --question 1 --answer "B" --lang zh
 ```
 
 </details>
 
 ## 当前范围
 
-互动 skill 目前完整实现 Episode 1：step 卡片、双语 clips、lab 创建、verification 和 quiz 评分。
+互动 skill 目前覆盖 Episode 1-14 的 step 卡片、双语 clips 和 quiz 评分。Lab 创建与自动 verification 目前实现到 Lab 1。

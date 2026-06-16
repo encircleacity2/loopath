@@ -32,7 +32,7 @@ For deterministic course output, run:
 
 ```bash
 python3 scripts/loopath.py step --episode 1 --step 1 --lang zh
-python3 scripts/loopath.py step --episode 1 --step 1 --lang en
+python3 scripts/loopath.py step --episode 14 --step 5 --lang en
 ```
 
 ## Start or Continue
@@ -47,14 +47,14 @@ When the user says "start", "continue", "开启 episode", "学习 Loopath", or s
 If the user asks for a specific episode or step, run:
 
 ```bash
-python3 scripts/loopath.py step --episode 1 --step <n> --lang <zh|en>
+python3 scripts/loopath.py step --episode <1-14> --step <n> --lang <zh|en>
 ```
 
 ## Lab
 
 The lab should happen inside the agent conversation. Do not tell the user to manually create files unless they explicitly want to practice shell commands.
 
-For Lab 1, ask for or choose a workspace path. If the user gives no path, propose `./loopath-dev`.
+For Lab 1, ask for or choose a workspace path. If the user gives no path, propose `./loopath-dev`. Lab automation is currently implemented for Episode 1; for later episodes, use `course/loopath-course.md` as the lab reference and guide the user through the deliverables conversationally.
 
 Create the lab project:
 
@@ -79,13 +79,13 @@ Return the rendered verification card verbatim. If it fails, explain only the to
 Run quiz one question at a time:
 
 ```bash
-python3 scripts/loopath.py quiz --episode 1 --question 1 --lang <zh|en>
+python3 scripts/loopath.py quiz --episode <1-14> --question 1 --lang <zh|en>
 ```
 
 After the user answers, grade it:
 
 ```bash
-python3 scripts/loopath.py grade --episode 1 --question 1 --answer "<answer>" --lang <zh|en>
+python3 scripts/loopath.py grade --episode <1-14> --question 1 --answer "<answer>" --lang <zh|en>
 ```
 
 Return the score, feedback, and reference answer. Then ask whether to continue to the next question.
@@ -96,4 +96,4 @@ Load only when needed:
 
 - `references/episode-01.zh.md` and `references/episode-01.en.md` for full Episode 1 teaching notes.
 - `course/loopath-course.md` for the complete long-form course draft.
-- `media/episode-01/clips/<zh|en>/step-NN.mp4` for the matching step clip.
+- `media/episode-XX/clips/<zh|en>/step-NN.mp4` for the matching step clip across Episodes 1-14.

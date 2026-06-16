@@ -21,7 +21,23 @@ class Step:
     why: dict[str, str]
 
 
-STEPS: list[Step] = [
+@dataclass(frozen=True)
+class Episode:
+    title: dict[str, str]
+    steps: list[Step]
+
+
+@dataclass(frozen=True)
+class EpisodeSpec:
+    title: dict[str, str]
+    thesis: dict[str, str]
+    core: dict[str, str]
+    lab: dict[str, str]
+    verify: dict[str, str]
+    quiz: dict[str, str]
+
+
+EPISODE1_STEPS: list[Step] = [
     Step(
         {"zh": "Loopath 是什么", "en": "What Loopath Is"},
         {
@@ -235,6 +251,350 @@ STEPS: list[Step] = [
 ]
 
 
+EPISODE_SPECS: dict[int, EpisodeSpec] = {
+    2: EpisodeSpec(
+        {"zh": "Action Schema", "en": "Action Schema"},
+        {
+            "zh": "自然语言不能直接驱动工具，模型输出必须先变成可验证的动作协议。",
+            "en": "Natural language cannot safely drive tools; model output must become a validated action protocol.",
+        },
+        {
+            "zh": "用 type discriminator 设计 read_file、search、run_command、edit_file、final_answer。",
+            "en": "Use a type discriminator for read_file, search, run_command, edit_file, and final_answer.",
+        },
+        {
+            "zh": "实现 actions.py 和 parser tests，把非法 JSON、未知 action、缺失字段分开处理。",
+            "en": "Implement actions.py and parser tests that separate invalid JSON, unknown actions, and missing fields.",
+        },
+        {
+            "zh": "运行 tests/test_actions.py；能解释 parse error 和 tool execution error 的区别。",
+            "en": "Run tests/test_actions.py and explain parse errors versus tool execution errors.",
+        },
+        {
+            "zh": "判断 action set 为什么要小，并设计 list_files action 的安全边界。",
+            "en": "Explain why the action set stays small and design safety boundaries for list_files.",
+        },
+    ),
+    3: EpisodeSpec(
+        {"zh": "Tool Registry", "en": "Tool Registry"},
+        {
+            "zh": "Tool use 不是普通函数调用，而是 agent 可控行动空间的边界。",
+            "en": "Tool use is not plain function calling; it is the boundary of the agent's action space.",
+        },
+        {
+            "zh": "统一 ToolResult，集中 workspace path resolver，并实现 read/search/run/edit。",
+            "en": "Create ToolResult, centralize workspace path resolution, and implement read/search/run/edit.",
+        },
+        {
+            "zh": "实现 tools.py 和 tests/test_tools.py，覆盖越界路径、搜索行号、命令失败和写文件。",
+            "en": "Implement tools.py and tests/test_tools.py for path escape, search line numbers, command failure, and writing.",
+        },
+        {
+            "zh": "运行 tests/test_tools.py；失败也必须成为 observation，而不是直接中断 loop。",
+            "en": "Run tests/test_tools.py; failures must become observations instead of crashing the loop.",
+        },
+        {
+            "zh": "回答 ToolResult metadata、搜索行号、workspace resolver 为什么重要。",
+            "en": "Explain why ToolResult metadata, search line numbers, and workspace resolvers matter.",
+        },
+    ),
+    4: EpisodeSpec(
+        {"zh": "Agent Loop", "en": "Agent Loop"},
+        {
+            "zh": "Agent loop 是 harness 的心脏：context、action、tool、observation 不断闭环。",
+            "en": "The agent loop is the harness heart: context, action, tool, and observation form a cycle.",
+        },
+        {
+            "zh": "用 FakeModel 让 loop 行为确定化，先测试 runtime，再接真实模型。",
+            "en": "Use FakeModel to make the loop deterministic, proving the runtime before adding real models.",
+        },
+        {
+            "zh": "实现 model.py、loop.py、tracing.py，并跑通 read_file 到 final_answer。",
+            "en": "Implement model.py, loop.py, tracing.py, and run read_file through final_answer.",
+        },
+        {
+            "zh": "运行 tests/test_loop.py；确认 max_steps、history、final_answer trace 都存在。",
+            "en": "Run tests/test_loop.py and confirm max_steps, history, and final_answer tracing.",
+        },
+        {
+            "zh": "解释为什么 final_answer 也是 action，以及什么时候 success=False 仍要保留 trace。",
+            "en": "Explain why final_answer is an action and when success=False still keeps a trace.",
+        },
+    ),
+    5: EpisodeSpec(
+        {"zh": "Context Engineering", "en": "Context Engineering"},
+        {
+            "zh": "模型不是知道整个 repo；它只知道 harness 给它看的 context。",
+            "en": "The model does not know the whole repo; it only sees the context the harness provides.",
+        },
+        {
+            "zh": "实现 minimal、search_first、repo_map 三种 context strategy 和 char budget。",
+            "en": "Implement minimal, search_first, and repo_map strategies with a character budget.",
+        },
+        {
+            "zh": "实现 context.py，让同一任务在不同策略下产生不同上下文。",
+            "en": "Implement context.py so the same task produces different context under different strategies.",
+        },
+        {
+            "zh": "运行 tests/test_context.py；超预算时必须显式标记 TRUNCATED。",
+            "en": "Run tests/test_context.py; over-budget context must be marked TRUNCATED.",
+        },
+        {
+            "zh": "构造 minimal 失败、repo_map 成功的案例，写入 context-failure.md。",
+            "en": "Build a case where minimal fails and repo_map succeeds, then write context-failure.md.",
+        },
+    ),
+    6: EpisodeSpec(
+        {"zh": "Policy 与 Sandbox", "en": "Policy and Sandbox"},
+        {
+            "zh": "Sandbox 是外部边界，policy 是内部决策；两者一起约束 agent 行动。",
+            "en": "Sandbox is the outer boundary; policy is the internal decision layer for agent actions.",
+        },
+        {
+            "zh": "实现 PolicyDecision、command policy，并在 tool 执行前检查 action。",
+            "en": "Implement PolicyDecision, command policy, and check actions before tool execution.",
+        },
+        {
+            "zh": "加入 prompt injection demo，验证 env、ssh、危险命令不会被执行。",
+            "en": "Add a prompt-injection demo and prove env, ssh, and dangerous commands are blocked.",
+        },
+        {
+            "zh": "运行 tests/test_policy.py；policy block 也要进入 observation 和 trace。",
+            "en": "Run tests/test_policy.py; policy blocks must appear in observations and traces.",
+        },
+        {
+            "zh": "解释 prompt injection 为什么不能只靠 prompt 防住，并设计禁止写 .env 的规则。",
+            "en": "Explain why prompts alone cannot stop injection and design a rule blocking .env writes.",
+        },
+    ),
+    7: EpisodeSpec(
+        {"zh": "Week 1 Capstone", "en": "Week 1 Capstone"},
+        {
+            "zh": "前 6 集的模块要串成一个可演示的 v0 harness。",
+            "en": "The first six modules become a runnable v0 harness demo.",
+        },
+        {
+            "zh": "用 FakeModel 跑 bugfix：read test、read app、edit、pytest、final_answer。",
+            "en": "Use FakeModel for bugfix: read test, read app, edit, pytest, final_answer.",
+        },
+        {
+            "zh": "创建 todo_bug demo repo，并生成一次完整 bugfix trace。",
+            "en": "Create the todo_bug demo repo and generate a complete bugfix trace.",
+        },
+        {
+            "zh": "确认测试通过、trace 存在、每一步 action/result 可审计。",
+            "en": "Confirm tests pass, trace exists, and each action/result is auditable.",
+        },
+        {
+            "zh": "复盘 action schema、policy、context、trace、eval 之间的依赖。",
+            "en": "Review how action schema, policy, context, trace, and eval depend on one another.",
+        },
+    ),
+    8: EpisodeSpec(
+        {"zh": "Eval Set", "en": "Eval Set"},
+        {
+            "zh": "没有 eval，就只能靠感觉判断 agent 有没有变好。",
+            "en": "Without evals, agent improvement is only a feeling.",
+        },
+        {
+            "zh": "区分 task success 和 trajectory quality，并设计 eval task schema。",
+            "en": "Separate task success from trajectory quality and design the eval task schema.",
+        },
+        {
+            "zh": "实现 evals/tasks.jsonl、EvalTask、EvalResult、verify_task 和 eval runner。",
+            "en": "Implement evals/tasks.jsonl, EvalTask, EvalResult, verify_task, and an eval runner.",
+        },
+        {
+            "zh": "至少 10 个 eval task；runner 输出 success rate、avg steps 和失败任务。",
+            "en": "Use at least 10 eval tasks; the runner reports success rate, average steps, and failures.",
+        },
+        {
+            "zh": "解释为什么 test pass 不等于 agent success，并给 README task 设计 verify。",
+            "en": "Explain why test pass is not agent success and design verification for a README task.",
+        },
+    ),
+    9: EpisodeSpec(
+        {"zh": "Tracing", "en": "Tracing"},
+        {
+            "zh": "Agent 失败时，trace 要把“模型不行”拆成可诊断的 failure mode。",
+            "en": "When agents fail, traces turn 'the model failed' into diagnosable failure modes.",
+        },
+        {
+            "zh": "设计 JSON trace：run_id、context preview、policy、action、result、final。",
+            "en": "Design JSON traces with run_id, context preview, policy, action, result, and final status.",
+        },
+        {
+            "zh": "实现 TraceLogger，保存 JSON，并渲染 Markdown trace report。",
+            "en": "Implement TraceLogger to save JSON and render Markdown trace reports.",
+        },
+        {
+            "zh": "用失败 trace 定位根因，而不是只看最终报错。",
+            "en": "Use failed traces to identify root cause instead of reading only the final error.",
+        },
+        {
+            "zh": "写 3 个 failure analysis：symptom、root cause、trace evidence、fix idea。",
+            "en": "Write three failure analyses with symptom, root cause, trace evidence, and fix idea.",
+        },
+    ),
+    10: EpisodeSpec(
+        {"zh": "Loop Engineering", "en": "Loop Engineering"},
+        {
+            "zh": "Loop engineering 是用 eval 和 trace 系统性改进 agent，而不是手感调 prompt。",
+            "en": "Loop engineering improves agents with evals and traces, not prompt tweaks by feel.",
+        },
+        {
+            "zh": "设计 baseline、strict_tools、planner 等 variant，并比较 success rate 和 avg steps。",
+            "en": "Design variants such as baseline, strict_tools, and planner, then compare success rate and avg steps.",
+        },
+        {
+            "zh": "实现 experiment runner，输出 variant 对比报告和失败模式。",
+            "en": "Implement an experiment runner that reports variant comparisons and failure modes.",
+        },
+        {
+            "zh": "报告必须说明 what improved、what got worse、which traces explain it。",
+            "en": "The report must say what improved, what got worse, and which traces explain it.",
+        },
+        {
+            "zh": "写 loop-engineering-definition.md，区分 prompt engineering 和 loop engineering。",
+            "en": "Write loop-engineering-definition.md comparing prompt engineering and loop engineering.",
+        },
+    ),
+    11: EpisodeSpec(
+        {"zh": "Reviewer Subagent", "en": "Reviewer Subagent"},
+        {
+            "zh": "Subagent 的价值是隔离上下文噪音，用另一个视角审查结果。",
+            "en": "A subagent reduces context noise and reviews results from another perspective.",
+        },
+        {
+            "zh": "先实现 rule-based reviewer，检查 edit 后是否运行测试、是否有 policy block。",
+            "en": "Start with a rule-based reviewer that checks tests after edits and policy blocks.",
+        },
+        {
+            "zh": "定义 ReviewResult、summarize_trace_for_review，并在 final_answer 前审查。",
+            "en": "Define ReviewResult, summarize_trace_for_review, and review before final_answer.",
+        },
+        {
+            "zh": "验证 reviewer 失败时 agent 不应直接给用户最终答案。",
+            "en": "Verify that reviewer rejection prevents the agent from returning a final answer.",
+        },
+        {
+            "zh": "解释 reviewer 为什么不该直接改代码，以及 rule-based baseline 的优势。",
+            "en": "Explain why reviewers should not directly edit code and why rule-based baselines help.",
+        },
+    ),
+    12: EpisodeSpec(
+        {"zh": "Self-Repair", "en": "Self-Repair"},
+        {
+            "zh": "Self-repair 不是盲目重试，而是用失败信号缩小修复范围。",
+            "en": "Self-repair is not blind retry; it uses failure signals to narrow the fix.",
+        },
+        {
+            "zh": "识别 pytest failure，摘要失败日志，限制 repair budget。",
+            "en": "Detect pytest failures, summarize failure logs, and enforce a repair budget.",
+        },
+        {
+            "zh": "在 loop 层接入 repair context，让下一步 action 针对具体失败。",
+            "en": "Wire repair context into the loop so the next action targets the specific failure.",
+        },
+        {
+            "zh": "至少一个 demo 第一次失败、第二次修好，并在 trace 中标记 repair phase。",
+            "en": "Show one demo that fails first, repairs second, and marks repair phase in the trace.",
+        },
+        {
+            "zh": "解释为什么 repair 不能无限 retry，为什么 prompt 要限制 scope。",
+            "en": "Explain why repairs need retry limits and scoped repair prompts.",
+        },
+    ),
+    13: EpisodeSpec(
+        {"zh": "CLI / MCP / Skills", "en": "CLI / MCP / Skills"},
+        {
+            "zh": "把教学 harness 放进真实生态，需要区分 AGENTS.md、skill、MCP 和 CLI。",
+            "en": "Putting the teaching harness into real ecosystems requires separating AGENTS.md, skills, MCP, and CLI.",
+        },
+        {
+            "zh": "先做 CLI 作为 product surface，再设计用户意图级 MCP tools。",
+            "en": "Build the CLI as the product surface first, then design intent-level MCP tools.",
+        },
+        {
+            "zh": "实现 cli.py、project scripts，并写 docs/mcp-design.md。",
+            "en": "Implement cli.py, project scripts, and docs/mcp-design.md.",
+        },
+        {
+            "zh": "CLI smoke test 能跑 run/eval；MCP design 不暴露内部私有函数。",
+            "en": "CLI smoke tests run run/eval; MCP design does not expose private internals.",
+        },
+        {
+            "zh": "解释 AGENTS.md 和 skill 的区别，以及什么场景适合 MCP。",
+            "en": "Explain AGENTS.md versus skills and what scenarios deserve MCP tools.",
+        },
+    ),
+    14: EpisodeSpec(
+        {"zh": "Capstone Demo", "en": "Capstone Demo"},
+        {
+            "zh": "最后一集不是继续堆功能，而是把项目包装成能展示、能解释、能验证的作品。",
+            "en": "The final episode packages the project into work that can be shown, explained, and verified.",
+        },
+        {
+            "zh": "整理 README、demo script、eval report、failure analysis 和面试问答。",
+            "en": "Prepare README, demo script, eval report, failure analysis, and interview answers.",
+        },
+        {
+            "zh": "准备 5 分钟 demo：problem、architecture、bugfix、trace、eval、lessons。",
+            "en": "Prepare a five-minute demo: problem, architecture, bugfix, trace, eval, and lessons.",
+        },
+        {
+            "zh": "最终 checklist：quickstart 能跑、trace/eval/report 存在、limitations 清楚。",
+            "en": "Final checklist: quickstart runs, traces/evals/reports exist, and limitations are clear.",
+        },
+        {
+            "zh": "用 capstone rubric 自评：架构、代码、tool/policy、trace、eval、表达。",
+            "en": "Self-grade with the capstone rubric: architecture, code, tool/policy, trace, eval, communication.",
+        },
+    ),
+}
+
+
+def build_episode_steps(spec: EpisodeSpec) -> list[Step]:
+    return [
+        Step(
+            {"zh": f"{spec.title['zh']}：为什么重要", "en": f"{spec.title['en']}: Why It Matters"},
+            spec.thesis,
+            {"zh": "建立本集要解决的 agent 工程问题。", "en": "Frame the agent engineering problem this episode solves."},
+            {"zh": "先理解问题，lab 里的实现才不会变成照抄代码。", "en": "Understanding the problem first keeps the lab from becoming copy-paste coding."},
+        ),
+        Step(
+            {"zh": f"{spec.title['zh']}：核心设计", "en": f"{spec.title['en']}: Core Design"},
+            spec.core,
+            {"zh": "明确模块边界、输入输出和取舍。", "en": "Clarify module boundaries, inputs, outputs, and tradeoffs."},
+            {"zh": "边界清楚后，policy、trace 和 eval 才能稳定接上。", "en": "Clear boundaries make policy, tracing, and eval integration stable."},
+        ),
+        Step(
+            {"zh": f"{spec.title['zh']}：Lab 产物", "en": f"{spec.title['en']}: Lab Deliverables"},
+            spec.lab,
+            {"zh": "把概念落到具体文件、测试和 demo。", "en": "Turn the concept into concrete files, tests, and demos."},
+            {"zh": "可运行产物比概念定义更能暴露设计问题。", "en": "Runnable artifacts reveal design problems better than concept definitions."},
+        ),
+        Step(
+            {"zh": f"{spec.title['zh']}：验收标准", "en": f"{spec.title['en']}: Verification"},
+            spec.verify,
+            {"zh": "确认本集产物可以被脚本、测试或 agent rubric 检查。", "en": "Confirm the episode output can be checked by scripts, tests, or an agent rubric."},
+            {"zh": "没有验收标准，就无法证明学习者真的完成了 lab。", "en": "Without verification, completion is only a claim."},
+        ),
+        Step(
+            {"zh": f"{spec.title['zh']}：Quiz 与作业", "en": f"{spec.title['en']}: Quiz and Assignment"},
+            spec.quiz,
+            {"zh": "用一问一答检查概念，用作业检查工程判断。", "en": "Use quiz questions for concepts and assignments for engineering judgment."},
+            {"zh": "这一步把视频学习转成可评分、可反馈的练习。", "en": "This turns video learning into scorable, feedback-ready practice."},
+        ),
+    ]
+
+
+EPISODES: dict[int, Episode] = {
+    1: Episode({"zh": "Harness 边界", "en": "Harness Boundaries"}, EPISODE1_STEPS),
+    **{number: Episode(spec.title, build_episode_steps(spec)) for number, spec in EPISODE_SPECS.items()},
+}
+
+
 QUIZ = {
     1: {
         "type": "multiple_choice",
@@ -309,9 +669,11 @@ def card(title: str, body: list[str]) -> str:
 
 def start(args: argparse.Namespace) -> int:
     lang = normalize_lang(args.lang, args.text or "")
+    episode_count = len(EPISODES)
     if lang == "zh":
         print(card("Loopath 互动课程", [
             "默认语言：中文",
+            f"课程范围：{episode_count} 个 episodes。每个 episode 都有对应 step clips。",
             "学习方式：每次一个小课题。你可以随时提问、继续下一节、开始 lab、跑 verification 或进入 quiz。",
             "",
             "建议从 Episode 1 / Step 1 开始：",
@@ -320,6 +682,7 @@ def start(args: argparse.Namespace) -> int:
     else:
         print(card("Loopath Interactive Course", [
             "Default language: English",
+            f"Course scope: {episode_count} episodes. Every episode has matching step clips.",
             "Learning mode: one small topic at a time. You can ask questions, continue, start the lab, run verification, or take the quiz.",
             "",
             "Recommended start: Episode 1 / Step 1:",
@@ -330,29 +693,34 @@ def start(args: argparse.Namespace) -> int:
 
 def render_step(args: argparse.Namespace) -> int:
     lang = normalize_lang(args.lang)
-    if args.episode != 1:
-        raise SystemExit("Only Episode 1 is implemented in the interactive skill v1.")
-    if args.step < 1 or args.step > len(STEPS):
-        raise SystemExit(f"Step must be between 1 and {len(STEPS)}.")
-    step = STEPS[args.step - 1]
-    video_path = f"media/episode-01/clips/{lang}/step-{args.step:02d}.mp4"
-    next_cmd = (
-        f"`python3 scripts/loopath.py step --episode 1 --step {args.step + 1} --lang {lang}`"
-        if args.step < len(STEPS)
-        else "`python3 scripts/loopath.py quiz --episode 1 --question 1 --lang {}`".format(lang)
-    )
+    episode = EPISODES.get(args.episode)
+    if episode is None:
+        raise SystemExit(f"Episode must be between 1 and {max(EPISODES)}.")
+    if args.step < 1 or args.step > len(episode.steps):
+        raise SystemExit(f"Step must be between 1 and {len(episode.steps)} for Episode {args.episode}.")
+    step = episode.steps[args.step - 1]
+    video_path = f"media/episode-{args.episode:02d}/clips/{lang}/step-{args.step:02d}.mp4"
+    if args.step < len(episode.steps):
+        next_cmd = f"`python3 scripts/loopath.py step --episode {args.episode} --step {args.step + 1} --lang {lang}`"
+        next_text = "继续下一小节、提问、开始 lab、跑 verification，或进入 quiz。" if lang == "zh" else "Continue to the next step, ask a question, start the lab, run verification, or take the quiz."
+    elif args.episode < max(EPISODES):
+        next_cmd = f"`python3 scripts/loopath.py step --episode {args.episode + 1} --step 1 --lang {lang}`"
+        next_text = f"进入 Episode {args.episode + 1}，或先提问、开始 lab、跑 verification，或进入 quiz。" if lang == "zh" else f"Continue to Episode {args.episode + 1}, ask a question, start the lab, run verification, or take the quiz."
+    else:
+        next_cmd = f"`python3 scripts/loopath.py quiz --episode {args.episode} --question 1 --lang {lang}`"
+        next_text = "课程 clips 已到最后一步。建议进入 quiz 或回顾 capstone rubric。" if lang == "zh" else "This is the final clip step. Take the quiz or review the capstone rubric."
     labels = {
-        "zh": ("背景", "目的", "为什么重要", "视频片段", "下一步", "继续下一小节、提问、开始 lab、跑 verification，或进入 quiz。"),
-        "en": ("Background", "Purpose", "Why it matters", "Clip", "Next", "Continue to the next step, ask a question, start the lab, run verification, or take the quiz."),
+        "zh": ("背景", "目的", "为什么重要", "视频片段", "下一步"),
+        "en": ("Background", "Purpose", "Why it matters", "Clip", "Next"),
     }[lang]
     sep = "：" if lang == "zh" else ": "
-    print(card(f"Episode 1 / Step {args.step}: {t(step.title, lang)}", [
+    print(card(f"Episode {args.episode} / Step {args.step}: {t(step.title, lang)}", [
         f"**{labels[0]}**{sep}{t(step.background, lang)}",
         f"**{labels[1]}**{sep}{t(step.purpose, lang)}",
         f"**{labels[2]}**{sep}{t(step.why, lang)}",
         f"**{labels[3]}**{sep}`{video_path}`",
         "",
-        f"**{labels[4]}**{sep}{labels[5]}",
+        f"**{labels[4]}**{sep}{next_text}",
         next_cmd,
     ]))
     return 0
@@ -450,26 +818,61 @@ def verify(args: argparse.Namespace) -> int:
     return 0 if passed else 1
 
 
+def get_quiz_item(episode_number: int, question_number: int) -> dict:
+    if episode_number == 1:
+        item = QUIZ.get(question_number)
+        if not item:
+            raise SystemExit(f"Question {question_number} is not available for Episode 1.")
+        return item
+    spec = EPISODE_SPECS.get(episode_number)
+    if spec is None:
+        raise SystemExit(f"Episode must be between 1 and {max(EPISODES)}.")
+    if question_number != 1:
+        raise SystemExit(f"Only Question 1 is available for Episode {episode_number}.")
+    return {
+        "type": "multiple_choice",
+        "question": {
+            "zh": f"Episode {episode_number} 的核心工程目标是什么？",
+            "en": f"What is the core engineering goal of Episode {episode_number}?",
+        },
+        "choices": {
+            "zh": [
+                "A. 让 prompt 更长。",
+                f"B. {spec.core['zh']}",
+                "C. 跳过验证，直接相信最终答案。",
+                "D. 把所有内部函数都暴露成工具。",
+            ],
+            "en": [
+                "A. Make the prompt longer.",
+                f"B. {spec.core['en']}",
+                "C. Skip verification and trust the final answer.",
+                "D. Expose every internal function as a tool.",
+            ],
+        },
+        "answer": "B",
+        "reference": {
+            "zh": f"正确答案是 B。{spec.core['zh']} 本集的 lab 和验收都围绕这个目标展开。",
+            "en": f"The correct answer is B. {spec.core['en']} The lab and verification are built around that goal.",
+        },
+    }
+
+
 def quiz(args: argparse.Namespace) -> int:
     lang = normalize_lang(args.lang)
-    item = QUIZ.get(args.question)
-    if not item:
-        raise SystemExit(f"Question {args.question} is not available.")
+    item = get_quiz_item(args.episode, args.question)
     lines = [t(item["question"], lang)]
     if item["type"] == "multiple_choice":
         lines.append("")
         lines.extend(item["choices"][lang])
     lines.append("")
     lines.append("Answer this question, then ask the agent to grade it." if lang == "en" else "请先回答这一题，然后让 agent 评分。")
-    print(card(f"Quiz {args.question}", lines))
+    print(card(f"Episode {args.episode} Quiz {args.question}", lines))
     return 0
 
 
 def grade(args: argparse.Namespace) -> int:
     lang = normalize_lang(args.lang)
-    item = QUIZ.get(args.question)
-    if not item:
-        raise SystemExit(f"Question {args.question} is not available.")
+    item = get_quiz_item(args.episode, args.question)
     answer = args.answer or (Path(args.answer_file).read_text(encoding="utf-8") if args.answer_file else "")
     normalized = answer.strip().lower()
     if item["type"] == "multiple_choice":
@@ -487,10 +890,10 @@ def grade(args: argparse.Namespace) -> int:
         else:
             feedback = "Needs more detail about harness boundaries and verification." if lang == "en" else "需要补充 harness 边界和验证机制。"
     reference_label = "Reference answer" if lang == "en" else "参考答案"
-    print(card(f"Quiz {args.question} Score: {score}/10", [
+    print(card(f"Episode {args.episode} Quiz {args.question} Score: {score}/10", [
         feedback,
         "",
-        f"**{reference_label}**：{t(item['reference'], lang)}",
+        f"**{reference_label}**{'：' if lang == 'zh' else ': '}{t(item['reference'], lang)}",
     ]))
     return 0
 

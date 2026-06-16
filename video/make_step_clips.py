@@ -9,9 +9,9 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "loopath.py"
-CLIP_OUT = ROOT / "media" / "episode-01" / "clips"
+MEDIA_OUT = ROOT / "media"
 SCREENSHOT_OUT = ROOT / "media" / "screenshots"
 W, H = 1280, 720
 FPS = 30
@@ -162,8 +162,9 @@ def draw_panel(draw: ImageDraw.ImageDraw, box, label: str, body: str, accent: st
         y += 34
 
 
-def render_step_frame(module, lang: str, step_idx: int, frame_idx: int) -> Image.Image:
-    step = module.STEPS[step_idx - 1]
+def render_step_frame(module, lang: str, episode_idx: int, step_idx: int, frame_idx: int) -> Image.Image:
+    episode = module.EPISODES[episode_idx]
+    step = episode.steps[step_idx - 1]
     p = frame_idx / max(1, (DURATION * FPS - 1))
     accent = ACCENT[lang]
     img = Image.new("RGB", (W, H), BG)
@@ -174,7 +175,7 @@ def render_step_frame(module, lang: str, step_idx: int, frame_idx: int) -> Image
     draw.ellipse((860, -120, 1370, 390), fill="#ECE7FF")
     draw.ellipse((980, 360, 1420, 850), fill="#E9F7F1" if lang == "zh" else "#EEF2FF")
 
-    draw_text(draw, (76, 72), f"Episode 1 / Step {step_idx:02d}", F["small"], accent)
+    draw_text(draw, (76, 72), f"Episode {episode_idx} / Step {step_idx:02d}", F["small"], accent)
     title = module.t(step.title, lang)
     title_lines = wrap(title, 18, 2)
     y = 128
@@ -213,8 +214,8 @@ def render_step_frame(module, lang: str, step_idx: int, frame_idx: int) -> Image
     return img
 
 
-def render_clip(module, lang: str, step_idx: int) -> Path:
-    out_dir = CLIP_OUT / lang
+def render_clip(module, lang: str, episode_idx: int, step_idx: int) -> Path:
+    out_dir = MEDIA_OUT / f"episode-{episode_idx:02d}" / "clips" / lang
     out_dir.mkdir(parents=True, exist_ok=True)
     out = out_dir / f"step-{step_idx:02d}.mp4"
     cmd = [
@@ -248,7 +249,7 @@ def render_clip(module, lang: str, step_idx: int) -> Path:
     assert proc.stdin is not None
     try:
         for frame_idx in range(DURATION * FPS):
-            img = render_step_frame(module, lang, step_idx, frame_idx)
+            img = render_step_frame(module, lang, episode_idx, step_idx, frame_idx)
             proc.stdin.write(img.tobytes())
     finally:
         proc.stdin.close()
@@ -326,9 +327,11 @@ def render_screenshots() -> None:
 
 def main() -> int:
     module = load_loopath()
-    for lang in ("zh", "en"):
-        for idx in range(1, len(module.STEPS) + 1):
-            print(render_clip(module, lang, idx))
+    for episode_idx in sorted(module.EPISODES):
+        episode = module.EPISODES[episode_idx]
+        for lang in ("zh", "en"):
+            for step_idx in range(1, len(episode.steps) + 1):
+                print(render_clip(module, lang, episode_idx, step_idx))
     render_screenshots()
     return 0
 
