@@ -770,54 +770,11 @@ def lab_create(args: argparse.Namespace) -> int:
         f"Created: {', '.join(created) if created else '-'}",
         f"Skipped existing files: {', '.join(skipped) if skipped else '-'}",
         "",
-        f"Verify: `python3 {ROOT / 'scripts' / 'loopath.py'} verify --episode 1 --repo {repo} --lang {lang}`",
+        ("接下来：在对话里逐个文件查看内容、解释设计取舍，再继续下一步。" if lang == "zh"
+         else "Next: review each file in the conversation, explain the design tradeoffs, then continue."),
     ]
     print(card(title, body))
     return 0
-
-
-def load_lab01_verifier():
-    path = ROOT / "labs" / "lab01" / "verify.py"
-    spec = importlib.util.spec_from_file_location("loopath_lab01_verify", path)
-    if spec is None or spec.loader is None:
-        raise RuntimeError(f"Cannot load verifier: {path}")
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
-def verify(args: argparse.Namespace) -> int:
-    lang = normalize_lang(args.lang)
-    module = load_lab01_verifier()
-    results = module.verify(Path(args.repo))
-    passed = all(result.passed for result in results)
-    ok_count = sum(1 for result in results if result.passed)
-    total = len(results)
-    if args.json:
-        print(json.dumps({
-            "passed": passed,
-            "score": ok_count,
-            "total": total,
-            "checks": [result.__dict__ for result in results],
-        }, ensure_ascii=False, indent=2))
-        return 0 if passed else 1
-    status = "PASS" if passed else "NEEDS WORK"
-    color = "#DCFCE7" if passed else "#FEE2E2"
-    fg = "#166534" if passed else "#991B1B"
-    title = "Lab 1 Verification" if lang == "en" else "Lab 1 验收结果"
-    print(f'<div style="border:1px solid #E5E7EB;border-radius:8px;padding:14px;font-family:ui-sans-serif,system-ui;">')
-    print(f'<div style="display:inline-block;background:{color};color:{fg};font-weight:700;padding:4px 10px;border-radius:999px;">{status}</div>')
-    print(f"<h3>{title}</h3>")
-    print(f"<p><strong>{ok_count}/{total}</strong> checks passed.</p>")
-    print("<table><thead><tr><th>Check</th><th>Status</th><th>Detail</th></tr></thead><tbody>")
-    for result in results:
-        badge = "PASS" if result.passed else "FAIL"
-        badge_color = "#166534" if result.passed else "#991B1B"
-        print(f"<tr><td><code>{result.name}</code></td><td style=\"color:{badge_color};font-weight:700;\">{badge}</td><td>{result.detail}</td></tr>")
-    print("</tbody></table>")
-    print("</div>")
-    return 0 if passed else 1
 
 
 def get_quiz_item(episode_number: int, question_number: int) -> dict:
@@ -921,13 +878,6 @@ def main() -> int:
     p.add_argument("--lang", default="auto")
     p.add_argument("--overwrite", action="store_true")
     p.set_defaults(func=lab_create)
-
-    p = sub.add_parser("verify")
-    p.add_argument("--episode", type=int, default=1)
-    p.add_argument("--repo", required=True)
-    p.add_argument("--lang", default="auto")
-    p.add_argument("--json", action="store_true")
-    p.set_defaults(func=verify)
 
     p = sub.add_parser("quiz")
     p.add_argument("--episode", type=int, default=1)
