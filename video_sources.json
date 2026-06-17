@@ -1,7 +1,21 @@
 {
   "clip_url_template": "https://github.com/encircleacity2/loopath/releases/download/clips-v1/ep{ep:02d}-{lang}-step{step:02d}.mp4",
   "intro": {
-    "en": "https://youtu.be/VhyROHm6Fkc",
+    "en": "https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.en.mp4",
     "zh": "https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.zh.mp4"
+  },
+  "local_cache": {
+    "dir": "media/local",
+    "clip_path_template": "media/local/clips-v1/ep{ep:02d}-{lang}-step{step:02d}.mp4",
+    "intro": {
+      "en": "media/local/intro-v1/loopath-intro.en.mp4",
+      "zh": "media/local/intro-v1/loopath-intro.zh.mp4"
+    },
+    "release_tags": {
+      "intro": "intro-v1",
+      "clips": "clips-v1"
+    },
+    "expected_mp4_count": 160,
+    "estimated_size_mb": 704
   }
 }

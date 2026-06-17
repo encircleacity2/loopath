@@ -7,7 +7,7 @@ description: Interactive bilingual course skill for learning loop engineering th
 
 Guide the user through Loopath as a conversational course, **not** as a static document. You are the course runtime: you read structured course data, teach one small step at a time, build the lab by writing files yourself, and grade quizzes against reference answers.
 
-There is no script to run. All course content lives in data and Markdown in this repo — read it with your normal file tools. (Earlier versions shelled out to `scripts/loopath.py`; that script no longer exists and must not be recreated.)
+There is no course engine script to run. All course content lives in data and Markdown in this repo — read it with your normal file tools. (Earlier versions shelled out to `scripts/loopath.py`; that script no longer exists and must not be recreated.) The only script is the optional video-cache helper, used after the learner opts in.
 
 ## Course data
 
@@ -33,12 +33,33 @@ Use the selected language for all explanations, questions, quiz feedback, and ca
 
 ## Video
 
-Videos are streamed from external hosting, configured in **`video_sources.json`**. Read that file and resolve links yourself — do **not** link `media/...` local paths (the repo ships lean and those clips are not on disk):
+Videos are configured in **`video_sources.json`**. Read that file and resolve links yourself. The repo stays lean by default; full local video caching is opt-in.
 
-- **Intro**: use `intro[<lang>]` from `video_sources.json` (e.g. the English intro is a YouTube link; the Chinese intro is a GitHub release asset).
-- **Per-step clip**: if `clip_url_template` is present, fill it with `ep`, `step`, `lang` (zero-padded to 2 digits where the template uses `{ep:02d}`/`{step:02d}`), e.g. `…/ep01-en-step01.mp4`. Otherwise fall back to `clip_base_url` + `episode-XX/clips/<lang>/step-NN.mp4`.
+### Local cache prompt
 
-Surface the clip link for the current step, and offer the intro at the very start. If `video_sources.json` is missing or a link can't be formed, just teach without the video — never block on media.
+At the very start of a Codex tutorial session, before the first lesson step, check `local_cache` in `video_sources.json`:
+
+1. Resolve `local_cache.dir` relative to the skill root.
+2. If the directory is missing or has fewer than `local_cache.expected_mp4_count` `.mp4` files, ask the learner one short question in their language:
+   - zh: "要不要先把全课程视频下载到本地？大约 {estimated_size_mb} MB。下载后我会在每一步直接嵌入可播放视频；不下载也可以继续用远程链接。"
+   - en: "Do you want to cache all course videos locally first? It is about {estimated_size_mb} MB. After that I can embed playable video in each step; otherwise we can continue with remote links."
+3. If the learner says yes, run:
+
+```bash
+python3 scripts/cache_videos.py --root <skill_root> --langs all
+```
+
+4. If the learner says no, or the download fails, continue with remote links. Do not block the lesson on media.
+
+If the local cache is complete, use it without asking again.
+
+### Resolving a video
+
+- **Intro**: use `local_cache.intro[<lang>]` if the file exists; otherwise use `intro[<lang>]`.
+- **Per-step clip**: use `local_cache.clip_path_template` if the file exists; otherwise fill `clip_url_template` with `ep`, `step`, `lang` (zero-padded where the template uses `{ep:02d}`/`{step:02d}`).
+- **Codex rendering**: when the selected video is a local `.mp4` path, present it as playable Markdown image syntax, e.g. `![Loopath Episode 2 Step 1](/absolute/path.mp4)`. When it is remote, present it as a normal Markdown link.
+
+Surface the clip for the current step, and offer the intro at the very start. If `video_sources.json` is missing or a link can't be formed, just teach without the video — never block on media.
 
 ## Course flow
 
@@ -50,7 +71,7 @@ One small topic at a time:
 4. Ask what's next: continue to the next step, ask a question, start the lab, run verification, or take the quiz.
 5. Do **not** dump a whole episode unless the user asks.
 
-At the very start (user says "start", "continue", "开始 / 学习 Loopath", or similar): detect language, give a short bilingual-aware welcome that names the course scope (14 episodes), offers the intro video, and recommends starting at Episode 1 / Step 1. Then wait for the user's choice.
+At the very start (user says "start", "continue", "开始 / 学习 Loopath", or similar): detect language, give a short bilingual-aware welcome that names the course scope (14 episodes), handle the local video-cache prompt above, offer the intro video, and recommend starting at Episode 1 / Step 1. Then wait for the user's choice.
 
 ## Lab
 

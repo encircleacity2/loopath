@@ -59,7 +59,7 @@ context → action → policy → tool → observation → trace → eval → �
 3. Say *"Use $loopath to start the course"*
 4. Watch the intro, then learn the loop one step at a time
 
-> Videos stream from external hosting (YouTube + release assets), so the repo stays lean and `git clone` is fast — no media tooling required.
+> Videos stream from external hosting by default, so the repo stays lean and `git clone` is fast. In Codex, the skill can also ask whether to cache all videos locally first, then embed each step as a playable video during the tutorial.
 
 <details>
 <summary><b>中文快速开始</b></summary>
@@ -79,7 +79,7 @@ git clone --depth 1 https://github.com/encircleacity2/loopath ~/.claude/skills/l
 <details>
 <summary><b>How the skill is built & course materials</b></summary>
 
-Loopath is a **data-driven** skill — no scripts to run, nothing to execute. The agent *is* the course runtime:
+Loopath is a **data-driven** skill — no course engine script to run. The agent *is* the course runtime:
 
 - [`course/episodes.json`](course/episodes.json) — the bilingual source of truth: all 14 episodes' titles, theses, learning objectives, step-by-step teaching beats, lab deliverables/verification, and a per-episode quiz bank with reference answers. Each episode's `lab` points at its on-disk templates.
 - [`course/labs/episode-NN/`](course/labs) — ready-to-write, English lab templates for **every** episode (modules, tests, demo repos, prompts, docs), laid out exactly as they belong in the student's project. Integration edits to earlier files ship as `*.snippet.md`. Every `.py` template is `py_compile`-clean and the core suite passes (`pytest`).
@@ -88,10 +88,10 @@ Loopath is a **data-driven** skill — no scripts to run, nothing to execute. Th
 
 > Earlier versions shelled out to a `scripts/loopath.py` engine. That's gone: executing a freshly-cloned third-party script gets blocked by agent safety classifiers on first install, and everything it did (rendering cards, grading, scaffolding the lab) is something the model does better directly. Content lives in data; the model is the runtime.
 
-Videos stream from external hosting, configured in [`video_sources.json`](video_sources.json):
+Videos stream from external hosting by default, configured in [`video_sources.json`](video_sources.json). In Codex, the skill can offer to cache the full course locally with [`scripts/cache_videos.py`](scripts/cache_videos.py); cached videos live under `media/local/` and are ignored by Git.
 
 - Bilingual step clips (Episode 1: 14 steps; Episodes 2–14: 5 steps each, `zh`+`en`, narrated) are hosted on GitHub Releases (`clips-v1`) and resolved via the `clip_url_template`. To switch to your own CDN (R2/TOS/etc.), edit that file.
-- Intro: [English on YouTube](https://youtu.be/VhyROHm6Fkc) · [中文 (release asset)](https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.zh.mp4)
+- Intro: [English (release asset)](https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.en.mp4) · [中文 (release asset)](https://github.com/encircleacity2/loopath/releases/download/intro-v1/loopath-intro.zh.mp4)
 
 </details>
 
