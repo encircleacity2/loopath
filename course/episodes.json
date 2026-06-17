@@ -518,6 +518,14 @@
           "zh": "运行 `pytest tests/test_actions.py`，四个用例（合法/非法 JSON/未知 type/缺失字段）全部通过。",
           "en": "Run `pytest tests/test_actions.py`; all four cases (valid / invalid JSON / unknown type / missing field) pass."
         },
+        "learner_prompt": {
+          "zh": "请像给 coding agent 下任务一样，用一段话描述你要它实现 Episode 2 的 lab。你的指令应覆盖：要改/新增哪些文件、五个 action 类型、用 Pydantic `type` discriminator、`parse_action` 要区分非法 JSON 与 schema 校验错误、以及要用哪些测试验收。不要写代码，只写需求指令。",
+          "en": "Write one paragraph as if you were instructing a coding agent to implement Episode 2's lab. Your request should cover: which files to create or update, the five action types, a Pydantic `type` discriminator, `parse_action` separating invalid JSON from schema validation errors, and the tests that should verify it. Do not write code; write the implementation request."
+        },
+        "prompt_rubric": {
+          "zh": "按 10 分制评价用户的 coding-agent 指令：目标与文件 2 分（是否点名 actions.py、tests/test_actions.py、pyproject.toml），action set 2 分（是否包含 read_file/search/run_command/edit_file/final_answer），schema 设计 2 分（是否要求 Pydantic、`type` discriminator、Union/TypeAdapter），错误分类 2 分（是否区分非法 JSON 与 schema mismatch），验收标准 2 分（是否要求四个测试用例或等价验收）。评分时引用用户指令里的具体短语作为证据。",
+          "en": "Grade the learner's coding-agent request out of 10: goal and files 2 points (does it name actions.py, tests/test_actions.py, pyproject.toml), action set 2 points (does it include read_file/search/run_command/edit_file/final_answer), schema design 2 points (does it ask for Pydantic, a `type` discriminator, Union/TypeAdapter), error classification 2 points (does it separate invalid JSON from schema mismatch), acceptance criteria 2 points (does it request the four test cases or equivalent verification). Quote a concrete phrase from the learner's request as evidence."
+        },
         "dir": "course/labs/episode-02",
         "files": [
           "src/loopath/actions.py",

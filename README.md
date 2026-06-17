@@ -49,7 +49,7 @@ context → action → policy → tool → observation → trace → eval → �
 
 - 🎬 **One step at a time** — each with a short narrated clip (中文 / English)
 - 🌐 **Fully bilingual** — auto-routes language for video and explanations
-- 🧪 **Hands-on lab** built conversationally inside your agent — no setup busywork
+- 🧪 **Hands-on vibe-coding lab** — you write the implementation request, the agent builds, verifies, and grades it
 - ❓ **Quiz with grading** to check you actually understood it
 
 ## Getting started in 20 seconds
@@ -83,7 +83,7 @@ Loopath is a **data-driven** skill — no course engine script to run. The agent
 
 - [`course/episodes.json`](course/episodes.json) — the bilingual source of truth: all 14 episodes' titles, theses, learning objectives, step-by-step teaching beats, lab deliverables/verification, and a per-episode quiz bank with reference answers. Each episode's `lab` points at its on-disk templates.
 - [`course/labs/episode-NN/`](course/labs) — ready-to-write, English lab templates for **every** episode (modules, tests, demo repos, prompts, docs), laid out exactly as they belong in the student's project. Integration edits to earlier files ship as `*.snippet.md`. Every `.py` template is `py_compile`-clean and the core suite passes (`pytest`).
-- [`SKILL.md`](SKILL.md) — instructions that tell the agent to read that data, teach one step at a time, **build the lab by writing files itself** (via the editor's file tools), grade quizzes against the reference answers + rubric, and resolve videos from `video_sources.json`.
+- [`SKILL.md`](SKILL.md) — instructions that tell the agent to read that data, teach one step at a time, run labs as a vibe-coding loop (learner prompt → agent implementation → verification → prompt feedback), grade quizzes against the reference answers + rubric, and resolve videos from `video_sources.json`.
 - [Full course draft](course/loopath-course.md) — the complete long-form course (full code listings + design discussion) the agent pulls from for depth, plus [`references/`](references) for Episode 1.
 
 > Earlier versions shelled out to a `scripts/loopath.py` engine. That's gone: executing a freshly-cloned third-party script gets blocked by agent safety classifiers on first install, and everything it did (rendering cards, grading, scaffolding the lab) is something the model does better directly. Content lives in data; the model is the runtime.

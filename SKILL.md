@@ -75,21 +75,23 @@ At the very start (user says "start", "continue", "开始 / 学习 Loopath", or 
 
 ## Lab
 
-The lab happens **inside the conversation**. Build it for the user with the **Write tool** — don't tell them to type shell commands or run a generator, unless they explicitly want to practice the shell.
+The lab happens **inside the conversation**. Make it feel like everyday AI-engineer vibe coding: the learner first gives a natural-language implementation request, then you act as the coding agent that implements, verifies, and reviews the result. Don't tell them to type shell commands or run a generator, unless they explicitly want to practice the shell.
 
-Every episode ships **ready-to-write, English lab templates on disk** under `lab.dir` (e.g. `course/labs/episode-03/`). The files there are laid out exactly as they belong in the student's project (`src/loopath/tools.py`, `tests/test_tools.py`, …). Don't hand-translate code from the course doc — copy these templates.
+Every episode ships **ready-to-write, English lab templates on disk** under `lab.dir` (e.g. `course/labs/episode-03/`). The files there are laid out exactly as they belong in the student's project (`src/loopath/tools.py`, `tests/test_tools.py`, …). Treat them as the canonical answer key and implementation target; don't hand-translate code from the course doc.
 
 To run a lab:
 
 1. Ask for a workspace path the first time (propose `./loopath-dev` if none given); reuse it for later episodes so the project accumulates.
-2. Ensure any `lab.dirs` exist in the workspace.
-3. For each path in `lab.files`: read `<skill_root>/<lab.dir>/<path>` and write it to `<workspace>/<path>` with the Write tool. (The same workspace-relative path applies on both sides.)
-4. For each entry in `lab.integrations` (e.g. `loop_policy.snippet.md`): read that file from `lab.dir` — it describes a small **edit to an earlier file** (like wiring policy into `loop.py`). Apply the edit with the Edit tool and explain it; do **not** copy a snippet file into the workspace verbatim.
-5. Walk the user through each file in chat — what it is, why it exists, the design tradeoffs. Pull deeper narration from the matching section of `course/loopath-course.md` when they want it.
+2. Before writing files, ask the learner to provide the lab's implementation prompt. If the episode has `lab.learner_prompt`, show that prompt and wait for the learner's answer. If it does not, ask for a concise coding-agent instruction that covers desired files, behavior, and tests.
+3. After the learner answers, implement the lab. Use the on-disk templates as the answer key, filling any gaps the learner missed so the project still reaches the episode's learning objective.
+4. Ensure any `lab.dirs` exist in the workspace.
+5. For each path in `lab.files`: read `<skill_root>/<lab.dir>/<path>` and write it to `<workspace>/<path>` with the Write tool. (The same workspace-relative path applies on both sides.)
+6. For each entry in `lab.integrations` (e.g. `loop_policy.snippet.md`): read that file from `lab.dir` — it describes a small **edit to an earlier file** (like wiring policy into `loop.py`). Apply the edit with the Edit tool and explain it; do **not** copy a snippet file into the workspace verbatim.
+7. Walk the user through each file in chat — what it is, why it exists, the design tradeoffs. Pull deeper narration from the matching section of `course/loopath-course.md` when they want it.
 
 Note: some files legitimately evolve across episodes — e.g. Episode 9's `src/loopath/tracing.py` supersedes Episode 4's. Writing the newer template over the older file is expected.
 
-After building, run the lab's `verify` conversationally: check the deliverables exist and meet the `verify` criteria (required files present, key sentences in docs, or run `pytest` if the user has a working ≥3.11 environment). Report what passed and what's missing — don't just claim success.
+After building, run the lab's `verify` conversationally: check the deliverables exist and meet the `verify` criteria (required files present, key sentences in docs, or run `pytest` if the user has a working ≥3.11 environment). Report what passed and what's missing — don't just claim success. If `lab.prompt_rubric` exists, also grade the learner's implementation prompt out of 10 after verification: cite a specific phrase from their prompt as evidence, name any missing requirements you had to infer, and explain how to improve the next coding-agent request.
 
 ## Quiz
 
@@ -100,11 +102,12 @@ Run quizzes **one question at a time**, reading from the episode's `quiz[]`:
    - `multiple_choice` — compare against `answer`. Correct → 10/10, otherwise 0/10, and explain why.
    - `short_answer` — grade with the `course.open_ended_rubric` (correctness 4 / specificity 3 / tradeoff awareness 2 / clarity 1). Use `keywords` only as hints to what a strong answer covers, not as a literal substring count. **Quote a specific sentence from the user's answer as evidence** — never give vague praise.
 3. Show the score, your feedback, and the `reference` answer in the user's language.
-4. Ask whether to continue to the next question.
+4. If another question remains, immediately present the next question in the same reply. Do not ask "continue?" between quiz questions.
+5. After the final question, show a compact quiz summary and then ask what the learner wants next (retry missed concepts, start the next episode, or run an extra challenge).
 
 ## Quick map for navigation
 
 - Start / welcome → read `episodes.json`, detect language, offer intro from `video_sources.json`.
 - "Episode N step M" → `episodes[N-1].steps[M-1]`.
-- "Start the lab" → `episodes[N-1].lab`: copy each `files[]` template from `lab.dir` into the workspace, then apply any `integrations[]` snippets.
-- "Quiz me" → iterate `episodes[N-1].quiz`, grade against `reference` + rubric.
+- "Start the lab" → `episodes[N-1].lab`: ask for the learner's implementation prompt, then write each `files[]` template from `lab.dir` into the workspace, apply any `integrations[]` snippets, verify, and grade the prompt if a prompt rubric exists.
+- "Quiz me" → iterate `episodes[N-1].quiz`, grade against `reference` + rubric, and auto-advance until the final summary.
